@@ -1,5 +1,6 @@
 package sample;
 
+
 import java.util.LinkedList;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -30,7 +31,12 @@ public class Main extends Application {
     Button przycisk_zasady;
     Button przycisk_menu;
     LinkedList kwadraty_lista = new LinkedList<Rectangle>();
-    LinkedList kola_lista = new LinkedList<Circle>();
+    LinkedList kola_red_lista = new LinkedList<Circle>();
+    LinkedList kola_white_lista = new LinkedList<Circle>();
+
+    LinkedList zajete_red = new LinkedList<Pozycja>();
+
+    LinkedList zajete_white = new LinkedList<Pozycja>();
 
     static  int roz_x = 50;
     static  int roz_y = 50;
@@ -87,22 +93,19 @@ public class Main extends Application {
         Group root = new Group();
         scena_plansza = new Scene(root,1000,500);
         root.getChildren().add(przycisk_menu);
-        Rectangle kwadrat = new Rectangle(100,100,100,100);
-        kwadrat.setOnMouseClicked(e -> System.out.println(kwadrat.getX()));
-        root.getChildren().add(kwadrat);
 
 
         // tworzy plansze
         //Tworze plansze
         int licz = 0;
-        for(int i = 0; i < 2; i++){
+        for(int i = 0; i < 8; i++){
             for(int j = 0; j < 8; j++){
                 Rectangle kwadratt = new Rectangle(roz_x * i,roz_y * j,roz_x,roz_y);
                 if (licz % 2 == 0) {
                     kwadratt.setFill(AQUA);
                 }
                 else {
-                    kwadrat.setFill(BROWN);
+                    kwadratt.setFill(BLACK);
                 }
                 kwadraty_lista.add(kwadratt);
 
@@ -111,7 +114,63 @@ public class Main extends Application {
             }
             licz+=1;
         }
+        //tworzy pionki
+        //czerwone
+        licz = 1;
+        for(int i = 0; i < 8; i++){
+            for(int j = 0; j < 3; j++){
+                Circle koloo = new Circle(roz_x * i + roz_x / 2,roz_y * j+ roz_y / 2,roz_x / 2);
+                if (licz % 2 == 0) {
+                    koloo.setFill(RED);
+                    Pozycja pom = new Pozycja(roz_x * i,roz_y * j,roz_x,roz_y);
+                    zajete_red.add(pom);
+                }
+                else{
+                    licz+=1;
+                    continue;
+                }
+                kola_red_lista.add(koloo);
+                root.getChildren().add(koloo);
+                licz+=1;
+            }
 
+        }
+
+        //czerwone
+        licz = 0;
+        for(int i = 0; i < 8; i++){
+            for(int j = 5; j < 8; j++){
+                Circle koloo = new Circle(roz_x * i + roz_x / 2,roz_y * j+ roz_y / 2,roz_x / 2);
+                if (licz % 2 == 0) {
+                    koloo.setFill(WHITE);
+                    Pozycja pom = new Pozycja(roz_x * i,roz_y * j,roz_x,roz_y);
+                    zajete_white.add(pom);
+                }
+                else{
+                    licz+=1;
+                    continue;
+                }
+                kola_white_lista.add(koloo);
+                root.getChildren().add(koloo);
+                licz+=1;
+            }
+        }
+
+
+
+
+
+
+        //czarne
+
+
+
+
+    //kwadrat
+        /*
+        Rectangle kwadrat = new Rectangle(100,100,100,100);
+        kwadrat.setOnMouseClicked(e -> System.out.println(kwadrat.getX()));
+        root.getChildren().add(kwadrat);
 
 
 
@@ -124,7 +183,7 @@ public class Main extends Application {
         root.getChildren().add(kolo);
 
 
-
+*/
 
 
     }
