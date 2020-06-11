@@ -1,6 +1,6 @@
 package sample;
 
-
+import java.util.LinkedList;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -13,9 +13,13 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import  javafx.scene.control.Button;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+
 import javafx.scene.shape.Rectangle;
 
 import static javafx.application.Application.launch;
+import static javafx.scene.paint.Color.*;
 
 public class Main extends Application {
     Stage window;
@@ -25,14 +29,30 @@ public class Main extends Application {
     Button przycisk_komputer;
     Button przycisk_zasady;
     Button przycisk_menu;
+    LinkedList kwadraty_lista = new LinkedList<Rectangle>();
+    LinkedList kola_lista = new LinkedList<Circle>();
+
+    static  int roz_x = 50;
+    static  int roz_y = 50;
+
+
+
+
 
 
     public static void main(String[] args) {
+
         launch(args);
 
     }
     @Override
     public void start(Stage primaryStage) throws Exception{
+
+
+
+
+
+
         window = primaryStage;
         //przycisk1
         przycisk_zasady = new Button();
@@ -71,9 +91,35 @@ public class Main extends Application {
         kwadrat.setOnMouseClicked(e -> System.out.println(kwadrat.getX()));
         root.getChildren().add(kwadrat);
 
+
+        // tworzy plansze
+        //Tworze plansze
+        int licz = 0;
+        for(int i = 0; i < 2; i++){
+            for(int j = 0; j < 8; j++){
+                Rectangle kwadratt = new Rectangle(roz_x * i,roz_y * j,roz_x,roz_y);
+                if (licz % 2 == 0) {
+                    kwadratt.setFill(AQUA);
+                }
+                else {
+                    kwadrat.setFill(BROWN);
+                }
+                kwadraty_lista.add(kwadratt);
+
+                root.getChildren().add(kwadratt);
+                licz+=1;
+            }
+            licz+=1;
+        }
+
+
+
+
+
+
         //kolo
 
-        Circle kolo = new Circle(150, 150, 50, Color.AQUA);
+        Circle kolo = new Circle(150, 150, 50, AQUA);
         kolo.setOnMouseClicked(e -> System.out.println("kolo"));
         root.getChildren().add(kolo);
 
