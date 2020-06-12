@@ -97,6 +97,7 @@ public class Plansza {
                 Circle koloo = new Circle(roz_x * i + roz_x / 2,roz_y * j+ roz_y / 2,roz_x / 2);
                 if (licz % 2 == 0) {
                     koloo.setFill(WHITE);
+                    koloo.setOnMouseClicked(e -> logika.ktoryPionekBiale(koloo));
                     Pozycja pom = new Pozycja(roz_x * i,roz_y * j,roz_x,roz_y,koloo);
                     zajete_white.add(pom);
                 }
