@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 import javafx.scene.shape.Rectangle;
+import sample.Plansza;
 
 import static javafx.application.Application.launch;
 import static javafx.scene.paint.Color.*;
@@ -97,6 +98,9 @@ public class Main extends Application {
 
         // tworzy plansze
         //Tworze plansze
+        Plansza plansza = new Plansza(kwadraty_lista,kola_red_lista,kola_white_lista,root,zajete_red,zajete_white);
+        plansza.RysujKwadraty(roz_x,roz_y);
+        /*
         int licz = 0;
         for(int i = 0; i < 8; i++){
             for(int j = 0; j < 8; j++){
@@ -114,15 +118,19 @@ public class Main extends Application {
             }
             licz+=1;
         }
+        */
+
         //tworzy pionki
         //czerwone
-        licz = 1;
+        /*
+        int licz = 1;
         for(int i = 0; i < 8; i++){
             for(int j = 0; j < 3; j++){
                 Circle koloo = new Circle(roz_x * i + roz_x / 2,roz_y * j+ roz_y / 2,roz_x / 2);
                 if (licz % 2 == 0) {
                     koloo.setFill(RED);
-                    Pozycja pom = new Pozycja(roz_x * i,roz_y * j,roz_x,roz_y);
+                    koloo.setOnMouseClicked(e -> koloo.setCenterX(200));
+                    Pozycja pom = new Pozycja(roz_x * i,roz_y * j,roz_x,roz_y,koloo);
                     zajete_red.add(pom);
                 }
                 else{
@@ -135,15 +143,19 @@ public class Main extends Application {
             }
 
         }
+        */
+        plansza.RysujCzerwone(roz_x,roz_y);
+        plansza.RysujBiale(roz_x,roz_y);
 
-        //czerwone
-        licz = 0;
+        //biale
+        /*
+        int licz = 0;
         for(int i = 0; i < 8; i++){
             for(int j = 5; j < 8; j++){
                 Circle koloo = new Circle(roz_x * i + roz_x / 2,roz_y * j+ roz_y / 2,roz_x / 2);
                 if (licz % 2 == 0) {
                     koloo.setFill(WHITE);
-                    Pozycja pom = new Pozycja(roz_x * i,roz_y * j,roz_x,roz_y);
+                    Pozycja pom = new Pozycja(roz_x * i,roz_y * j,roz_x,roz_y,koloo);
                     zajete_white.add(pom);
                 }
                 else{
@@ -155,6 +167,9 @@ public class Main extends Application {
                 licz+=1;
             }
         }
+
+        /*
+         */
 
 
 
