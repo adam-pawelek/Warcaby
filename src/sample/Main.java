@@ -98,8 +98,8 @@ public class Main extends Application {
 
         // tworzy plansze
         //Tworze plansze
-        Plansza plansza = new Plansza(kwadraty_lista,kola_red_lista,kola_white_lista,root,zajete_red,zajete_white);
-        plansza.RysujKwadraty(roz_x,roz_y);
+        Plansza plansza = new Plansza(kwadraty_lista,kola_red_lista,kola_white_lista,root,zajete_red,zajete_white,roz_x,roz_y);
+        plansza.rysujKwadraty(roz_x,roz_y);
         /*
         int licz = 0;
         for(int i = 0; i < 8; i++){
@@ -144,8 +144,8 @@ public class Main extends Application {
 
         }
         */
-        plansza.RysujCzerwone(roz_x,roz_y);
-        plansza.RysujBiale(roz_x,roz_y);
+        plansza.rysujCzerwone(roz_x,roz_y);
+        plansza.rysujBiale(roz_x,roz_y);
 
         //biale
         /*
