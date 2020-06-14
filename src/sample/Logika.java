@@ -9,7 +9,7 @@ import java.util.LinkedList;
 import java.math.*;
 
 public class Logika {
-    LinkedList kwadraty_lista = new LinkedList<Rectangle>();
+    LinkedList <Rectangle> kwadraty_lista;// = new LinkedList<Rectangle>();
     LinkedList <Circle> kola_red_lista;
     LinkedList <Circle> kola_white_lista;
     LinkedList zajete_red = new LinkedList<Pozycja>();
@@ -22,7 +22,11 @@ public class Logika {
     int ktory_gracz = 0; // kto wykonuje ruch  biale czy czerwone
     Circle ostatni_czerwony;
     Circle ostatni_bialy;
+    Circle ostatni_czerwony_bil;
+    Circle ostatni_bialy_bil;
     boolean bylruch = false;
+    boolean bialyBil = false;
+    boolean czerwonyBil = false;
 
     public Logika(LinkedList kwadraty_lista, LinkedList kola_red_lista, LinkedList kola_white_lista, Group root,LinkedList zajete_red, LinkedList zajete_white,
     int roz_x, int roz_y){
@@ -37,18 +41,18 @@ public class Logika {
     }
 
     public void ktoryPioenkCzerwone(Circle koloo){
-        if (ktory_gracz == 0) {
+
             ostatni_x_red = (int) koloo.getCenterX();
             ostatni_y_red = (int) koloo.getCenterY();
             ostatni_czerwony = koloo;
             System.out.println("kolo czerwone");
 
-        }
+
     }
     public  void  ktoryPionekBiale(Circle koloo){
-        if (ktory_gracz == 1){
+
             ostatni_bialy = koloo;
-        }
+
     }
 
 
@@ -72,6 +76,23 @@ public class Logika {
         }
         for (Circle koloo : kola_white_lista){
             if (Math.abs(kwadrat.getY() - (koloo.getCenterY() - roz_y / 2)) < roz_y / 2 && Math.abs(kwadrat.getX() - (koloo.getCenterX() - roz_x /2)) < roz_x /2 ){
+                return true;
+            }
+
+        }
+        return false;
+    }
+    public boolean to_pole_zawiera(double poz_x, double poz_y){
+        poz_x = poz_x - roz_x /2;
+        poz_y = poz_y - roz_y /2;
+        for (Circle koloo : kola_red_lista){
+            if (Math.abs(poz_y - (koloo.getCenterY() - roz_y / 2)) < roz_y / 2 && Math.abs(poz_x - (koloo.getCenterX() - roz_x /2)) < roz_x /2 ){
+                return true;
+            }
+
+        }
+        for (Circle koloo : kola_white_lista){
+            if (Math.abs(poz_y - (koloo.getCenterY() - roz_y / 2)) < roz_y / 2 && Math.abs(poz_x - (koloo.getCenterX() - roz_x /2)) < roz_x /2 ){
                 return true;
             }
 
@@ -111,22 +132,47 @@ public class Logika {
         return false;
     }
 
+    public boolean to_pole_miesci(double poz_x, double poz_y){
+            if (poz_x > 0 && poz_y > 0 && poz_x < roz_x * 8 && poz_y < roz_y * 8 ){
+                return true;
+            }
+            return false;
+    }
+
 
     public void  ruchBiale(Rectangle kwadrat){
         bylruch = false;
+        if (bialyBil == true){
+            ostatni_bialy = ostatni_bialy_bil;
+        }
+
         if(!to_pole_zawiera(kwadrat)){
             System.out.println("Ruch biale");
-            bylruch = bylruch || ruchBialePrawo(kwadrat);
-            bylruch = bylruch || ruchBialeLewo(kwadrat);
-            bylruch = bylruch || bijBialePrawoGora(kwadrat);
-            bylruch = bylruch || bijBialeLewoGora(kwadrat);
-            bylruch = bylruch || bijBialeLewoDol(kwadrat);
-            bylruch = bylruch || bijBialePrawoDol(kwadrat);
+            bylruch =  ruchBialePrawo(kwadrat) || bylruch;
+            bylruch = ruchBialeLewo(kwadrat) || bylruch;
+            bialyBil = bijBialePrawoGora(kwadrat) || bialyBil;
+            bialyBil = bijBialeLewoGora(kwadrat) || bialyBil;
+            bialyBil = bijBialeLewoDol(kwadrat) || bialyBil;
+            bialyBil = bijBialePrawoDol(kwadrat) || bialyBil;
+            bylruch = bylruch || bialyBil;
+            System.out.println("RUCHYYYYYYYY");
+            System.out.println(ostatni_bialy.getCenterX());
+            if(bialyBil == true){
+                ostatni_bialy_bil = ostatni_bialy;
+            }
+
+            if (bialyBil && ( moze_bijBialePrawoGora() || moze_bijBialeLewoGora() || moze_bijBialeLewoDol() || moze_bijBialePrawoDol() )){
+                ktory_gracz = ktory_gracz;
+            }
+            else if (bylruch){
+                ktory_gracz += 1;
+                ktory_gracz= ktory_gracz % 2;
+                bylruch = false;
+                bialyBil = false;
+            }
         }
-        if (bylruch){
-            ktory_gracz += 1;
-            ktory_gracz= ktory_gracz % 2;
-        }
+
+
     }
     public boolean ruchBialePrawo(Rectangle kwadrat){
         System.out.println("asdfasdf");
@@ -160,6 +206,30 @@ public class Logika {
             }
         }
         return false;
+    }
+    public boolean moze_bijBialePodstawa(int xx, int yy){
+        if (!to_pole_zawiera(ostatni_bialy.getCenterX() + roz_x * 2 * xx,ostatni_bialy.getCenterY() + roz_y * 2 * yy)) {
+            if (to_pole_miesci(ostatni_bialy.getCenterX() + roz_x * 2 * xx, ostatni_bialy.getCenterY() + roz_y * 2 * yy)) {
+                if (to_pole_zawiera_czerwone(ostatni_bialy.getCenterX() + roz_x * xx, ostatni_bialy.getCenterY() + roz_y * yy)) {
+                    System.out.println("moze_bij");
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean moze_bijBialePrawoGora(){
+        return moze_bijBialePodstawa(1,-1);
+    }
+    public boolean moze_bijBialePrawoDol(){
+        return moze_bijBialePodstawa(1,1);
+    }
+    public boolean moze_bijBialeLewoGora(){
+        return moze_bijBialePodstawa(-1,-1);
+    }
+    public boolean moze_bijBialeLewoDol(){
+        return moze_bijBialePodstawa(-1,1);
     }
 
     public boolean bijBialeLewoGora(Rectangle kwadrat){
@@ -205,21 +275,74 @@ public class Logika {
 
     public  void ruchCzerwone(Rectangle kwadrat){
         bylruch = false;
+        if (czerwonyBil == true){
+            ostatni_czerwony = ostatni_czerwony_bil;
+        }
         if(!to_pole_zawiera(kwadrat)){
             System.out.println("Ruch czerwoen");
             bylruch = bylruch || ruchCzerwonePrawo(kwadrat);
             bylruch = bylruch || ruchCzerwoneLewo(kwadrat);
-            bylruch = bylruch || bijCzerwoneLewoDol(kwadrat);
-            bylruch = bylruch || bijCzerwonePrawoDol(kwadrat);
-            bylruch = bylruch || bijCzerwoneLewoGora(kwadrat);
-            bylruch = bylruch || bijCzerwonePrawoGora(kwadrat);
-        }
-        if (bylruch){
-            ktory_gracz += 1;
-            ktory_gracz= ktory_gracz % 2;
+            czerwonyBil =  bijCzerwoneLewoDol(kwadrat) || czerwonyBil;
+            czerwonyBil =  bijCzerwonePrawoDol(kwadrat) || czerwonyBil;
+            czerwonyBil =  bijCzerwoneLewoGora(kwadrat) || czerwonyBil;
+            czerwonyBil =  bijCzerwonePrawoGora(kwadrat) || czerwonyBil;
+            bylruch = bylruch || czerwonyBil;
+            System.out.println("CZEEWRWWERWEERW");
+            System.out.println(czerwonyBil);
+
+            if(czerwonyBil == true){
+                ostatni_czerwony_bil = ostatni_czerwony;
+            }
+
+            if (czerwonyBil && ( moze_bijCzerwoneLewoGora() || moze_bijCzerwoneLewoGora() || moze_bijCzerwonePrawoDol() || moze_bijCzerwoneLewoDol())){
+                ktory_gracz = ktory_gracz;
+            }
+            else if (bylruch){
+                ktory_gracz += 1;
+                ktory_gracz= ktory_gracz % 2;
+                bylruch = false;
+                czerwonyBil = false;
+            }
+
         }
 
+
     }
+
+
+
+
+
+
+    public boolean moze_bijCzerwonePodstawa(int xx, int yy){
+        if (!to_pole_zawiera(ostatni_czerwony.getCenterX() + roz_x * 2 * xx,ostatni_czerwony.getCenterY() + roz_y * 2 * yy)) {
+            if (to_pole_miesci(ostatni_czerwony.getCenterX() + roz_x * 2 * xx, ostatni_czerwony.getCenterY() + roz_y * 2 * yy)) {
+                if (to_pole_zawiera_biale(ostatni_czerwony.getCenterX() + roz_x * xx, ostatni_czerwony.getCenterY() + roz_y * yy)) {
+                    System.out.println("moze_bij CZerowne");
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean moze_bijCzerwonePrawoGora(){
+        return moze_bijCzerwonePodstawa(1,-1);
+    }
+    public boolean moze_bijCzerwonePrawoDol(){
+        return moze_bijCzerwonePodstawa(1,1);
+    }
+    public boolean moze_bijCzerwoneLewoGora(){
+        return moze_bijCzerwonePodstawa(-1,-1);
+    }
+    public boolean moze_bijCzerwoneLewoDol(){
+        return moze_bijCzerwonePodstawa(-1,1);
+    }
+
+
+
+
+
 
     public  boolean ruchCzerwonePrawo(Rectangle kwadrat){
         System.out.println("asdfasdf");
@@ -254,6 +377,7 @@ public class Logika {
         }
         return false;
     }
+
 
     public boolean bijCzerwoneLewoGora(Rectangle kwadrat){
         if (to_pole_dozwolone(ostatni_czerwony.getCenterX() - roz_x * 2,ostatni_czerwony.getCenterY() - roz_y * 2,kwadrat)) {

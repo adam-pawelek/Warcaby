@@ -11,6 +11,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import  javafx.scene.control.Button;
 import java.awt.*;
@@ -33,6 +34,7 @@ public class Plansza {
     Logika logika;
     int roz_x;
     int roz_y;
+    Text tekst = new Text("asdf");
     public Plansza(LinkedList kwadraty_lista,LinkedList kola_red_lista,LinkedList kola_white_lista,Group root,LinkedList zajete_red,LinkedList zajete_white,
                    int roz_x, int roz_y){
         this.kwadraty_lista = kwadraty_lista;
@@ -44,6 +46,9 @@ public class Plansza {
         this.roz_x = roz_x;
         this.roz_y = roz_y;
         logika = new Logika(kwadraty_lista,kola_red_lista,kola_white_lista,root,zajete_red,zajete_white,roz_x,roz_y);
+        tekst.setX(700);
+        tekst.setY(200);
+        root.getChildren().add(tekst);
     }
 
     public void rysujKwadraty(int roz_x, int roz_y){
@@ -111,6 +116,7 @@ public class Plansza {
             }
         }
     }
+
 
 
 }
