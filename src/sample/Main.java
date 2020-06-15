@@ -1,6 +1,7 @@
 package sample;
 
 
+import java.io.IOException;
 import java.util.LinkedList;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -22,6 +23,9 @@ import sample.Plansza;
 
 import static javafx.application.Application.launch;
 import static javafx.scene.paint.Color.*;
+
+import java.net.*;
+import java.io.*;
 
 public class Main extends Application {
     Stage window;
@@ -47,9 +51,12 @@ public class Main extends Application {
 
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        //Thread t1 = new Thread(new Serwer(kwadraty_lista,kola_red_lista,kola_white_lista,root,zajete_red,zajete_white,roz_x,roz_y));
+       // t1.start();
 
         launch(args);
+
 
     }
     @Override
@@ -200,6 +207,10 @@ public class Main extends Application {
 
 */
 
+
+
+        Thread t1 = new Thread(new Serwer(kwadraty_lista,kola_red_lista,kola_white_lista,root,zajete_red,zajete_white,roz_x,roz_y));
+        t1.start();
 
     }
 

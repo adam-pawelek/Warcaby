@@ -456,6 +456,31 @@ public class Logika {
         return  false;
     }
 
+    Circle  znajdz_Pionek(double poz_x, double poz_y){
+        poz_x = poz_x - roz_x /2;
+        poz_y = poz_y - roz_y /2;
+        for (Circle koloo : kola_red_lista){
+            if (Math.abs(poz_y - (koloo.getCenterY() - roz_y / 2)) < roz_y / 2 && Math.abs(poz_x - (koloo.getCenterX() - roz_x /2)) < roz_x /2 ){
+                return koloo;
+            }
+
+        }
+        for (Circle koloo : kola_white_lista){
+            if (Math.abs(poz_y - (koloo.getCenterY() - roz_y / 2)) < roz_y / 2 && Math.abs(poz_x - (koloo.getCenterX() - roz_x /2)) < roz_x /2 ){
+                return koloo;
+            }
+
+        }
+        return  null;
+
+    }
+    public void ustaw_Na_Pole(double wczesniej_poz_x,double wczesniej_poz_y, double teraz_poz_x, double teraz_poz_y){
+        Circle koloo = znajdz_Pionek(wczesniej_poz_x,wczesniej_poz_y);
+        System.out.println("Ustaw na pole");
+        koloo.setCenterX(teraz_poz_x);
+        koloo.setCenterY(teraz_poz_y);
+    }
+
 
 
 
