@@ -22,7 +22,7 @@ import java.util.LinkedList;
 
 
 
-public class Serwer implements Runnable{
+public class Serwer extends Thread{
     LinkedList <Rectangle> kwadraty_lista;// = new LinkedList<Rectangle>();
     LinkedList <Circle> kola_red_lista;
     LinkedList <Circle> kola_white_lista;
@@ -33,10 +33,17 @@ public class Serwer implements Runnable{
     int ostatni_y_red;
     int roz_x;
     int roz_y;
+   // Logika logika;
+    PrintWriter pr;
+   // boolean wyslij_pionek;
+   // Circle ostatni_wyslij;
+   // Circle nowy_wyslij;
+    sample.Plansza plansza;
+
 
 
     public Serwer(LinkedList kwadraty_lista, LinkedList kola_red_lista, LinkedList kola_white_lista, Group root,LinkedList zajete_red, LinkedList zajete_white,
-                  int roz_x, int roz_y){
+                  int roz_x, int roz_y,boolean wyslij_pionek,Circle ostatni_wyslij,Circle nowy_wyslij){
         this.kwadraty_lista = kwadraty_lista;
         this.kola_red_lista = kola_red_lista;
         this.kola_white_lista = kola_white_lista;
@@ -46,13 +53,17 @@ public class Serwer implements Runnable{
         this.roz_x = roz_x;
         this.roz_y = roz_y;
     }
+    public Serwer (sample.Plansza plansza){
+        this.plansza = plansza;
+    }
     @Override
     public void run(){
+       // logika =  new Logika(kwadraty_lista,kola_red_lista,kola_white_lista,root,zajete_red,zajete_white,roz_x,roz_y, wyslij_pionek, ostatni_wyslij, nowy_wyslij);
         System.out.println("asdfsadfasd");
-        Circle koloo;
-        koloo = kola_red_lista.get(0);
-        System.out.println(koloo.getCenterX());
-        System.out.println(koloo.getCenterY());
+       // Circle koloo;
+        //koloo = kola_red_lista.get(0);
+        //System.out.println(koloo.getCenterX());
+        //System.out.println(koloo.getCenterY());
         ServerSocket ss = null;
         try {
             ss = new ServerSocket(4999);
@@ -68,41 +79,56 @@ public class Serwer implements Runnable{
         System.out.println("client connected");
         Circle pomoc;
 
-        PrintWriter pr = null;
+        pr = null;
         try {
-            pr = new PrintWriter(s.getOutputStream());
+            pr = new PrintWriter(s.getOutputStream(),true);
         } catch (IOException e) {
             e.printStackTrace();
         }
         pr.println("100 100 100 100");
         pr.flush();
 
+        InputStreamReader in = null;
+        try {
+            in = new InputStreamReader(s.getInputStream());
+        } catch (IOException e) {
+            //e.printStackTrace();
+        }
+        BufferedReader bf = new BufferedReader(in);
+        String str = null;
+
+
 
         while (true) {
-            InputStreamReader in = null;
-            try {
-                in = new InputStreamReader(s.getInputStream());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            BufferedReader bf = new BufferedReader(in);
-            String str = null;
-            try {
-                str = bf.readLine();
-            } catch (IOException e) {
-                e.printStackTrace();
+
+
+            if (plansza.logika.wyslij_pionek) {
+                pr.println("25 75 700 500 ");
+                pr.flush();
+                System.out.println("DLACZEGOOOOOOOOOOOOOOOO");
+                /*
+                try {
+                    str = bf.readLine();
+                    System.out.println(str);
+                } catch (IOException e) {
+                    // e.printStackTrace();
+                }
+                */
+
             }
 
             if (str != null) {
                 System.out.println(str);
-                pr.println("100 100 100 100");
-                pr.flush();
+              //  pr.println("100 100 100 100");
+                //pr.flush();
 
-                Logika logika =  new Logika(kwadraty_lista,kola_red_lista,kola_white_lista,root,zajete_red,zajete_white,roz_x,roz_y);
-                logika.ustaw_Na_Pole(czytaj(str,1),czytaj(str,2),700,400);
+
+                //logika.ustaw_Na_Pole(czytaj(str,1),czytaj(str,2),czytaj(str,3),czytaj(str,4));
 
 
             }
+            wyslij_drugi_gracz();
+           // System.out.println("asdfsdaf");
         }
     }
 
@@ -127,4 +153,46 @@ public class Serwer implements Runnable{
         System.out.println(zamiana);
         return (double) zamiana;
     }
+    public void wyslij_drugi_gracz(){
+
+       System.out.println(plansza.logika.wyslij_pionek);
+     //  if(ostatni_wyslij != null){
+     //      System.out.println(ostatni_wyslij.getCenterX());
+     //  }
+        pr.println("xxx");
+        pr.flush();
+
+        if(plansza.logika.wyslij_pionek){
+            pr.println("RUSZYLEM  sie");
+            pr.flush();
+
+            System.out.println("WYSYLAAMMMMMMMMMMMMMMMMMMMMMMMMMMMMM");
+           String dane_slowo = stworzString();
+            pr.println(dane_slowo);
+            pr.flush();
+            plansza.logika.wyslij_pionek = false;
+        }
+    }
+
+    public  String stworzString() {
+        String wynik = "";
+        int zamint;
+        System.out.println(plansza.logika.ostatni_wyslij.getCenterX());
+        zamint = (int) plansza.logika.ostatni_wyslij.getCenterX();  // ostatni x
+        wynik += String.valueOf(zamint);
+        wynik += " ";
+        zamint = (int) plansza.logika.ostatni_wyslij.getCenterY(); // ostatni y
+        wynik += String.valueOf(zamint);
+        wynik += " ";
+        zamint = (int) plansza.logika.nowy_wyslij.getCenterX();    //nowy x
+        wynik += String.valueOf(zamint);
+        wynik += " ";
+        zamint = (int) plansza.logika.nowy_wyslij.getCenterY();   // nowy y
+        wynik += String.valueOf(zamint);
+        wynik += " ";
+        return wynik;
+    }
+
+
+
 }

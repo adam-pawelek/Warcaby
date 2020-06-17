@@ -45,6 +45,9 @@ public class Main extends Application {
 
     static  int roz_x = 50;
     static  int roz_y = 50;
+    boolean wyslij_pionek;
+    Circle ostatni_wyslij;
+    Circle nowy_wyslij;
 
 
 
@@ -105,7 +108,7 @@ public class Main extends Application {
 
         // tworzy plansze
         //Tworze plansze
-        Plansza plansza = new Plansza(kwadraty_lista,kola_red_lista,kola_white_lista,root,zajete_red,zajete_white,roz_x,roz_y);
+        Plansza plansza = new Plansza(kwadraty_lista,kola_red_lista,kola_white_lista,root,zajete_red,zajete_white,roz_x,roz_y,wyslij_pionek, ostatni_wyslij, nowy_wyslij);
         plansza.rysujKwadraty(roz_x,roz_y);
         /*
         int licz = 0;
@@ -209,8 +212,13 @@ public class Main extends Application {
 
 
 
-        Thread t1 = new Thread(new Serwer(kwadraty_lista,kola_red_lista,kola_white_lista,root,zajete_red,zajete_white,roz_x,roz_y));
+        //Thread t1 = new Thread(new Serwer(kwadraty_lista,kola_red_lista,kola_white_lista,root,zajete_red,zajete_white,roz_x,roz_y, wyslij_pionek, ostatni_wyslij, nowy_wyslij));
+        //t1.start();
+
+
+        Thread t1 = new Thread(new Serwer(plansza));
         t1.start();
+
 
     }
 

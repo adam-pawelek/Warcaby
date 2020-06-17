@@ -11,12 +11,22 @@ public class Klient {
         PrintWriter pr = new PrintWriter(s.getOutputStream());
         //pr.println("hello");
         //pr.flush();
-        pr.println("25 75 120 120 ");
-        pr.flush();
+      //  pr.println("25 75 700 500 ");
+     //   pr.flush();
         InputStreamReader in = new InputStreamReader(s.getInputStream());
         BufferedReader bf = new BufferedReader(in);
-        String str  = bf.readLine();
-        System.out.println(str);
+        String str;
+
+        int x = 0;
+        while (true) {
+            //pr.println("25 75 700 500 ");
+           // pr.flush();
+            str = bf.readLine();
+            if(!str.equals(null) && !str.equals("xxx")) {
+                System.out.println(str);
+            }
+        }
+
 
     }
 }
