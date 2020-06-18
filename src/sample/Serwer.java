@@ -177,17 +177,17 @@ public class Serwer extends Thread{
     public  String stworzString() {
         String wynik = "";
         int zamint;
-        System.out.println(plansza.logika.ostatni_wyslij.getCenterX());
-        zamint = (int) plansza.logika.ostatni_wyslij.getCenterX();  // ostatni x
+        System.out.println(plansza.logika.ostatni_wyslij_x);
+        zamint = (int) plansza.logika.ostatni_wyslij_x;  // ostatni x
         wynik += String.valueOf(zamint);
         wynik += " ";
-        zamint = (int) plansza.logika.ostatni_wyslij.getCenterY(); // ostatni y
+        zamint = (int) plansza.logika.ostatni_wyslij_y; // ostatni y
         wynik += String.valueOf(zamint);
         wynik += " ";
-        zamint = (int) plansza.logika.nowy_wyslij.getCenterX();    //nowy x
+        zamint = (int) plansza.logika.nowy_wyslij_x;    //nowy x
         wynik += String.valueOf(zamint);
         wynik += " ";
-        zamint = (int) plansza.logika.nowy_wyslij.getCenterY();   // nowy y
+        zamint = (int) plansza.logika.nowy_wyslij_y;   // nowy y
         wynik += String.valueOf(zamint);
         wynik += " ";
         return wynik;
