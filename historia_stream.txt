@@ -1,0 +1,6 @@
+Historia GRY 
+Czerwone d3  na   c4
+Biale         c6  na   d5
+Czerwone f3  na   e4
+Biale         d5  na   f3
+Czerwone g2  na   e4

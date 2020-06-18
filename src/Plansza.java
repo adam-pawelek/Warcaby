@@ -106,7 +106,7 @@ public class Plansza {
     public  void  rysujBiale(int roz_x, int roz_y){
         int licz = 0;
         for(int i = 0; i < 8; i++){
-            for(int j = 5; j < 6; j++){
+            for(int j = 5; j < 8; j++){
                 Circle koloo = new Circle(roz_x * i + roz_x / 2,roz_y * j+ roz_y / 2,roz_x / 2);
                 if (licz % 2 == 0) {
                     koloo.setFill(WHITE);

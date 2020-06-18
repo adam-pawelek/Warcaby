@@ -2,6 +2,7 @@ package sample;
 
 
 import java.io.IOException;
+import java.util.Formatter;
 import java.util.LinkedList;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -20,7 +21,7 @@ import  javafx.scene.control.Button;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
-
+import javafx.scene.control.ScrollPane;
 import javafx.scene.shape.Rectangle;
 import sample.Plansza;
 
@@ -42,6 +43,8 @@ public class Main extends Application {
     Button przycisk_menu_plansza;
     Button przycisk_menu_zasady;
     Button przycisk_menu_jednoos;
+    Button przycisk_pobierz_historie_je;
+    Button przycisk_pobierz_historie_st;
 
     LinkedList kwadraty_lista = new LinkedList<Rectangle>();
     LinkedList kola_red_lista = new LinkedList<Circle>();
@@ -158,6 +161,27 @@ public class Main extends Application {
         scena_zasady = new Scene(layout2,1000,500);
 
         //plansza
+
+        przycisk_pobierz_historie_st = new Button();
+        przycisk_pobierz_historie_st.setText("Pobierz Historie");
+        przycisk_pobierz_historie_st.setOnAction(e -> {
+            Formatter plik;
+            try {
+                plik = new Formatter("historia_stream.txt");
+                plik.format("%s",historia_gry.getText());
+                plik.close();
+            } catch (FileNotFoundException fileNotFoundException) {
+                fileNotFoundException.printStackTrace();
+            }
+
+        });
+
+
+
+
+
+
+
         Group root = new Group();
         scena_plansza = new Scene(root,1000,500);
         root.getChildren().add(przycisk_menu_plansza);
@@ -165,7 +189,7 @@ public class Main extends Application {
         historia_gry.setText("Historia GRY \n");
         historia_gry.setLayoutX(600);
         historia_gry.setLayoutY(100);
-        root.getChildren().add(historia_gry);
+       // root.getChildren().add(historia_gry);
 
 
         // tworzy plansze
@@ -176,6 +200,15 @@ public class Main extends Application {
         plansza.rysujCzerwone(roz_x,roz_y);
         plansza.rysujBiale(roz_x,roz_y);
 
+        ScrollPane skrolowanie = new ScrollPane();
+        skrolowanie.setContent(historia_gry);
+        skrolowanie.setMinSize(170, 150);
+        skrolowanie.setMaxSize(200,170);
+        skrolowanie.setVisible(true);
+        skrolowanie.setLayoutX(600);
+        skrolowanie.setLayoutY(100);
+        root.getChildren().add(skrolowanie);
+        root.getChildren().add(przycisk_pobierz_historie_st);
 
 
 
@@ -187,6 +220,21 @@ public class Main extends Application {
 
 
         //gra jednooosobowa
+
+        przycisk_pobierz_historie_je = new Button();
+        przycisk_pobierz_historie_je.setText("Pobierz Historie");
+        przycisk_pobierz_historie_je.setOnAction(e -> {
+            Formatter plik;
+            try {
+                plik = new Formatter("historia.txt");
+                plik.format("%s",historia_gryv2.getText());
+                plik.close();
+            } catch (FileNotFoundException fileNotFoundException) {
+                fileNotFoundException.printStackTrace();
+            }
+
+        });
+
 
         przycisk_menu_jednoos = new Button();
         przycisk_menu_jednoos.setText("Menu");
@@ -204,9 +252,20 @@ public class Main extends Application {
         plansza_jednoosobowa.rysujBiale(roz_x,roz_y);
 
         historia_gryv2.setText("Historia GRY \n");
-        historia_gryv2.setLayoutX(600);
-        historia_gryv2.setLayoutY(100);
-        layout_jednoosobowa.getChildren().add(historia_gryv2);
+        //historia_gryv2.setLayoutX(600);
+        //historia_gryv2.setLayoutY(100);
+        ScrollPane skrolowaniev2 = new ScrollPane();
+        skrolowaniev2.setContent(historia_gryv2);
+        skrolowaniev2.setMinSize(170, 150);
+        skrolowaniev2.setMaxSize(200,170);
+        skrolowaniev2.setVisible(true);
+        skrolowaniev2.setLayoutX(600);
+        skrolowaniev2.setLayoutY(100);
+        layout_jednoosobowa.getChildren().add(skrolowaniev2);
+       // layout_jednoosobowa.getChildren().add(historia_gryv2);
+        layout_jednoosobowa.getChildren().add(przycisk_pobierz_historie_je);
+
+
 
 
 
