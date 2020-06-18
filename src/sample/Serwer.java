@@ -151,7 +151,7 @@ public class Serwer extends Thread{
     }
     public void wyslij_drugi_gracz(){
 
-       System.out.println(plansza.logika.wyslij_pionek);
+     ///  System.out.println(plansza.logika.wyslij_pionek);
      //  if(ostatni_wyslij != null){
      //      System.out.println(ostatni_wyslij.getCenterX());
      //  }
@@ -166,12 +166,19 @@ public class Serwer extends Thread{
            String dane_slowo = stworzString();
             pr.println(dane_slowo);
             pr.flush();
+            if(plansza.logika.ktos_bil){
+                String pozycja_usuniecia = bijString();
+                pr.println(pozycja_usuniecia);
+                pr.flush();
+                plansza.logika.ktos_bil = false;
+            }
             plansza.logika.wyslij_pionek = false;
         }
     }
 
     public  String stworzString() {
-        String wynik = "";
+        String wynik = "Ruch";
+
         int zamint;
         System.out.println(plansza.logika.ostatni_wyslij_x);
         zamint = (int) plansza.logika.ostatni_wyslij_x;  // ostatni x
@@ -186,6 +193,19 @@ public class Serwer extends Thread{
         zamint = (int) plansza.logika.nowy_wyslij_y;   // nowy y
         wynik += String.valueOf(zamint);
         wynik += " ";
+        return wynik;
+    }
+    public String bijString(){
+        String wynik = "Bijj";
+        int zamint;
+        System.out.println(plansza.logika.poz_usun_x);
+        zamint = (int) plansza.logika.poz_usun_x;  // ostatni x
+        wynik += String.valueOf(zamint);
+        wynik += " ";
+        zamint = (int) plansza.logika.poz_usun_y; // ostatni y
+        wynik += String.valueOf(zamint);
+        wynik += " ";
+
         return wynik;
     }
 

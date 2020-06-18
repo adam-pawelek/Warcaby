@@ -1,11 +1,17 @@
 package sample;
 
+import javafx.application.Platform;
+
 import java.net.*;
 import java.io.*;
+
+import javafx.concurrent.Task;
 
 
 public class Klient implements Runnable{
     sample.Plansza plansza;
+    String str;
+    String poprzedni = new String();
     public Klient(sample.Plansza plansza){
         this.plansza = plansza;
     }
@@ -34,7 +40,7 @@ public class Klient implements Runnable{
             e.printStackTrace();
         }
         BufferedReader bf = new BufferedReader(in);
-        String str;
+
 
         int x = 0;
         str = null;
@@ -47,8 +53,32 @@ public class Klient implements Runnable{
                 e.printStackTrace();
             }
             if(!str.equals(null) && !str.equals("xxx") && !str.equals("RUSZYLEM  sie")) {
-                System.out.println(str);
-                plansza.logika.ustaw_Na_Pole(czytaj(str,1),czytaj(str,2),czytaj(str,3),czytaj(str,4));
+                String rodzaj_ruchu = new String();
+                rodzaj_ruchu = "";
+                rodzaj_ruchu += str.charAt(0);
+                rodzaj_ruchu += str.charAt(1);
+                rodzaj_ruchu += str.charAt(2);
+                rodzaj_ruchu += str.charAt(3);
+                if(rodzaj_ruchu.equals("Ruch")) {
+                    System.out.println(str);
+                    plansza.logika.ustaw_Na_Pole(czytaj(str, 1), czytaj(str, 2), czytaj(str, 3), czytaj(str, 4));
+                }
+                if(rodzaj_ruchu.equals("Bijj")){
+                    System.out.println("WYSYla komunikat o biciu!!!");
+                   // plansza.logika.ustaw_Na_Pole(czytaj(str, 1), czytaj(str, 2), czytaj(str, 3), czytaj(str, 4));
+
+                   //plansza.logika.usunCzerwone(czytaj(str,1),czytaj(str,2));
+                    poprzedni = "";
+                    for( int i = 0; i < str.length(); i++){
+                        poprzedni += str.charAt(i);
+                    }
+                    Platform.runLater(()-> {
+
+                        final boolean b = plansza.logika.usunCzerwone(czytaj(poprzedni, 1), czytaj(poprzedni, 2));
+                        final boolean c = plansza.logika.usunBiale(czytaj(poprzedni, 1), czytaj(poprzedni, 2));
+                    });
+                    //plansza.logika.ustaw_Na_Pole(czytaj(str, 1), czytaj(str, 2), 500, 500);
+                }
             }
         }
 
@@ -56,7 +86,7 @@ public class Klient implements Runnable{
     }
 
     public double czytaj(String str,int ktory){
-        int licz = 0;
+        int licz = 4;
         String pom = new String(" ");
         String wynik = new String("");
         System.out.println("a" + pom + "b");

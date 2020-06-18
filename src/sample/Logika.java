@@ -35,7 +35,9 @@ public class Logika {
     public  double ostatni_wyslij_y;
     public  double nowy_wyslij_x;
     public double nowy_wyslij_y;
-    boolean ktos_bil;
+    public boolean ktos_bil;
+    public int poz_usun_x;
+    public int poz_usun_y;
 
 
     public Logika(LinkedList kwadraty_lista, LinkedList kola_red_lista, LinkedList kola_white_lista, Group root,LinkedList zajete_red, LinkedList zajete_white,
@@ -181,10 +183,11 @@ public class Logika {
                 nowy_wyslij = ostatni_bialy;
                 nowy_wyslij_x = ostatni_bialy.getCenterX();
                 nowy_wyslij_y = ostatni_bialy.getCenterY();
-                ktos_bil = true;
+
                 wyslij_do_watku();
             }
             else if (bylruch){
+
                 ktory_gracz += 1;
                 ktory_gracz= ktory_gracz % 2;
                 bylruch = false;
@@ -328,9 +331,11 @@ public class Logika {
                 nowy_wyslij = ostatni_czerwony;
                 nowy_wyslij_x = ostatni_czerwony.getCenterX();
                 nowy_wyslij_y = ostatni_czerwony.getCenterY();
+
                 wyslij_do_watku();
             }
             else if (bylruch){
+
                 ktory_gracz += 1;
                 ktory_gracz= ktory_gracz % 2;
                 bylruch = false;
@@ -338,6 +343,7 @@ public class Logika {
                 nowy_wyslij = ostatni_czerwony;
                 nowy_wyslij_x = ostatni_czerwony.getCenterX();
                 nowy_wyslij_y = ostatni_czerwony.getCenterY();
+
                 wyslij_do_watku();
             }
 
@@ -471,6 +477,13 @@ public class Logika {
              //   System.out.println("CZemu Nie dziala");
                 kola_white_lista.remove(pom_usun);
                 root.getChildren().remove(pom_usun);
+
+                //do Serwer-klient
+                ktos_bil = true;
+                poz_usun_x = (int) poz_x + roz_x / 2;
+                poz_usun_y = (int) poz_y + roz_y / 2;
+
+
                 return  true;
             }
 
@@ -479,6 +492,7 @@ public class Logika {
     }
 
     public boolean  usunCzerwone(double poz_x,double poz_y){
+
         poz_x = poz_x - roz_x /2;
         poz_y = poz_y - roz_y /2 ;
         Circle pom_usun = new Circle(1,1,1);
@@ -488,6 +502,13 @@ public class Logika {
             //    System.out.println("CZemu Nie dziala");
                 kola_red_lista.remove(pom_usun);
                 root.getChildren().remove(pom_usun);
+
+                //do Serwer-klient
+                ktos_bil = true;
+                poz_usun_x = (int) poz_x + roz_x / 2;
+                poz_usun_y = (int) poz_y + roz_y / 2;
+
+
                 return  true;
             }
 
@@ -516,6 +537,7 @@ public class Logika {
     public void ustaw_Na_Pole(double wczesniej_poz_x,double wczesniej_poz_y, double teraz_poz_x, double teraz_poz_y){
         Circle koloo = znajdz_Pionek(wczesniej_poz_x,wczesniej_poz_y);
       //  System.out.println("Ustaw na pole");
+
         koloo.setCenterX(teraz_poz_x);
         koloo.setCenterY(teraz_poz_y);
     }
