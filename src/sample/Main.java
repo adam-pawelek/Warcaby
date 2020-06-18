@@ -34,13 +34,14 @@ import java.io.*;
 import javafx.scene.text.Font.*;
 public class Main extends Application {
     Stage window;
-    Scene scena_menu, scena_plansza, scena_zasady;
+    Scene scena_menu, scena_plansza, scena_zasady,scena_jednoosobowa;
 
     Button przycisk_stream;
-    Button przycisk_komputer;
+    Button przycisk_jednaos;
     Button przycisk_zasady;
     Button przycisk_menu_plansza;
     Button przycisk_menu_zasady;
+    Button przycisk_menu_jednoos;
 
     LinkedList kwadraty_lista = new LinkedList<Rectangle>();
     LinkedList kola_red_lista = new LinkedList<Circle>();
@@ -55,6 +56,25 @@ public class Main extends Application {
     boolean wyslij_pionek;
     Circle ostatni_wyslij;
     Circle nowy_wyslij;
+    Text historia_gry = new Text();
+
+
+    //Do gry jednoosobowej
+
+    LinkedList kwadraty_listav2 = new LinkedList<Rectangle>();
+    LinkedList kola_red_listav2 = new LinkedList<Circle>();
+    LinkedList kola_white_listav2 = new LinkedList<Circle>();
+
+    LinkedList zajete_redv2 = new LinkedList<Pozycja>();
+
+    LinkedList zajete_whitev2 = new LinkedList<Pozycja>();
+
+    static  int roz_xv2 = 50;
+    static  int roz_yv2 = 50;
+    boolean wyslij_pionekv2;
+    Circle ostatni_wyslijv2;
+    Circle nowy_wyslijv2;
+    Text historia_gryv2 = new Text();
 
 
 
@@ -83,8 +103,8 @@ public class Main extends Application {
         przycisk_zasady.setText("Zasady");
         przycisk_stream = new Button();
         przycisk_stream.setText("Stream");
-        przycisk_komputer = new Button();
-        przycisk_komputer.setText("komputer");
+        przycisk_jednaos = new Button();
+        przycisk_jednaos.setText("komputer");
 
         przycisk_menu_plansza = new Button();
         przycisk_menu_plansza.setText("Menu");
@@ -95,12 +115,13 @@ public class Main extends Application {
 
         // menu
         VBox layout  = new VBox(20);
-        layout.getChildren().addAll(przycisk_zasady, przycisk_stream,przycisk_komputer);
+        layout.getChildren().addAll(przycisk_zasady, przycisk_stream, przycisk_jednaos);
         scena_menu = new Scene(layout,1000,500);
         primaryStage.setScene(scena_menu);
         primaryStage.show();
         przycisk_zasady.setOnAction(e -> window.setScene(scena_zasady));
         przycisk_stream.setOnAction(e -> window.setScene(scena_plansza));
+        przycisk_jednaos.setOnAction(e -> window.setScene(scena_jednoosobowa));
 
 
 
@@ -141,81 +162,21 @@ public class Main extends Application {
         scena_plansza = new Scene(root,1000,500);
         root.getChildren().add(przycisk_menu_plansza);
 
+        historia_gry.setText("Historia GRY \n");
+        historia_gry.setLayoutX(600);
+        historia_gry.setLayoutY(100);
+        root.getChildren().add(historia_gry);
+
 
         // tworzy plansze
         //Tworze plansze
-        Plansza plansza = new Plansza(kwadraty_lista,kola_red_lista,kola_white_lista,root,zajete_red,zajete_white,roz_x,roz_y,wyslij_pionek, ostatni_wyslij, nowy_wyslij);
+        Plansza plansza = new Plansza(kwadraty_lista,kola_red_lista,kola_white_lista,root,zajete_red,zajete_white,roz_x,roz_y,wyslij_pionek, ostatni_wyslij, nowy_wyslij,historia_gry);
         plansza.rysujKwadraty(roz_x,roz_y);
-        /*
-        int licz = 0;
-        for(int i = 0; i < 8; i++){
-            for(int j = 0; j < 8; j++){
-                Rectangle kwadratt = new Rectangle(roz_x * i,roz_y * j,roz_x,roz_y);
-                if (licz % 2 == 0) {
-                    kwadratt.setFill(AQUA);
-                }
-                else {
-                    kwadratt.setFill(BLACK);
-                }
-                kwadraty_lista.add(kwadratt);
 
-                root.getChildren().add(kwadratt);
-                licz+=1;
-            }
-            licz+=1;
-        }
-        */
-
-        //tworzy pionki
-        //czerwone
-        /*
-        int licz = 1;
-        for(int i = 0; i < 8; i++){
-            for(int j = 0; j < 3; j++){
-                Circle koloo = new Circle(roz_x * i + roz_x / 2,roz_y * j+ roz_y / 2,roz_x / 2);
-                if (licz % 2 == 0) {
-                    koloo.setFill(RED);
-                    koloo.setOnMouseClicked(e -> koloo.setCenterX(200));
-                    Pozycja pom = new Pozycja(roz_x * i,roz_y * j,roz_x,roz_y,koloo);
-                    zajete_red.add(pom);
-                }
-                else{
-                    licz+=1;
-                    continue;
-                }
-                kola_red_lista.add(koloo);
-                root.getChildren().add(koloo);
-                licz+=1;
-            }
-
-        }
-        */
         plansza.rysujCzerwone(roz_x,roz_y);
         plansza.rysujBiale(roz_x,roz_y);
 
-        //biale
-        /*
-        int licz = 0;
-        for(int i = 0; i < 8; i++){
-            for(int j = 5; j < 8; j++){
-                Circle koloo = new Circle(roz_x * i + roz_x / 2,roz_y * j+ roz_y / 2,roz_x / 2);
-                if (licz % 2 == 0) {
-                    koloo.setFill(WHITE);
-                    Pozycja pom = new Pozycja(roz_x * i,roz_y * j,roz_x,roz_y,koloo);
-                    zajete_white.add(pom);
-                }
-                else{
-                    licz+=1;
-                    continue;
-                }
-                kola_white_lista.add(koloo);
-                root.getChildren().add(koloo);
-                licz+=1;
-            }
-        }
 
-        /*
-         */
 
 
 
@@ -225,26 +186,36 @@ public class Main extends Application {
         //czarne
 
 
+        //gra jednooosobowa
+
+        przycisk_menu_jednoos = new Button();
+        przycisk_menu_jednoos.setText("Menu");
+        przycisk_menu_jednoos.setOnAction(e -> window.setScene(scena_menu));
+        przycisk_menu_jednoos.setLayoutX(400);
+        przycisk_menu_jednoos.setLayoutY(200);
+
+        Group layout_jednoosobowa = new Group();
+        scena_jednoosobowa = new Scene(layout_jednoosobowa,1000,500);
+        layout_jednoosobowa.getChildren().addAll(przycisk_menu_jednoos);
+
+        Plansza plansza_jednoosobowa = new Plansza(kwadraty_listav2,kola_red_listav2,kola_white_listav2,layout_jednoosobowa,zajete_redv2,zajete_whitev2,roz_xv2,roz_yv2,wyslij_pionekv2, ostatni_wyslijv2, nowy_wyslijv2,historia_gryv2 );
+        plansza_jednoosobowa.rysujKwadraty(roz_x,roz_y);
+        plansza_jednoosobowa.rysujCzerwone(roz_x,roz_y);
+        plansza_jednoosobowa.rysujBiale(roz_x,roz_y);
+
+        historia_gryv2.setText("Historia GRY \n");
+        historia_gryv2.setLayoutX(600);
+        historia_gryv2.setLayoutY(100);
+        layout_jednoosobowa.getChildren().add(historia_gryv2);
 
 
-    //kwadrat
-        /*
-        Rectangle kwadrat = new Rectangle(100,100,100,100);
-        kwadrat.setOnMouseClicked(e -> System.out.println(kwadrat.getX()));
-        root.getChildren().add(kwadrat);
 
 
 
 
 
-        //kolo
-
-        Circle kolo = new Circle(150, 150, 50, AQUA);
-        kolo.setOnMouseClicked(e -> System.out.println("kolo"));
-        root.getChildren().add(kolo);
 
 
-*/
 
 
 

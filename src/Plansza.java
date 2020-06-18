@@ -38,8 +38,9 @@ public class Plansza {
     Circle ostatni_wyslij;
     Circle nowy_wyslij;
     Text tekst = new Text("asdf");
+    Text historia_gry;
     public Plansza(LinkedList kwadraty_lista,LinkedList kola_red_lista,LinkedList kola_white_lista,Group root,LinkedList zajete_red,LinkedList zajete_white,
-                   int roz_x, int roz_y,boolean wyslij_pionek,Circle ostatni_wyslij,Circle nowy_wyslij){
+                   int roz_x, int roz_y,boolean wyslij_pionek,Circle ostatni_wyslij,Circle nowy_wyslij,Text historia_gry){
         this.kwadraty_lista = kwadraty_lista;
         this.kola_red_lista = kola_red_lista;
         this.kola_white_lista = kola_white_lista;
@@ -51,10 +52,11 @@ public class Plansza {
         this.wyslij_pionek = wyslij_pionek;
         this.ostatni_wyslij = ostatni_wyslij;
         this.nowy_wyslij = nowy_wyslij;
-        logika = new Logika(kwadraty_lista,kola_red_lista,kola_white_lista,root,zajete_red,zajete_white,roz_x,roz_y,wyslij_pionek, ostatni_wyslij,nowy_wyslij);
+        logika = new Logika(kwadraty_lista,kola_red_lista,kola_white_lista,root,zajete_red,zajete_white,roz_x,roz_y,wyslij_pionek, ostatni_wyslij,nowy_wyslij,historia_gry);
         tekst.setX(700);
         tekst.setY(200);
         root.getChildren().add(tekst);
+        this.historia_gry = historia_gry;
     }
 
     public void rysujKwadraty(int roz_x, int roz_y){

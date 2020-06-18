@@ -4,6 +4,7 @@ package sample;
 import javafx.scene.Group;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 
 import java.util.LinkedList;
 import java.math.*;
@@ -43,10 +44,11 @@ public class Logika {
     public boolean ktos_bil;
     public int poz_usun_x;
     public int poz_usun_y;
+    Text historia_gry;
 
 
     public Logika(LinkedList kwadraty_lista, LinkedList kola_red_lista, LinkedList kola_white_lista, Group root,LinkedList zajete_red, LinkedList zajete_white,
-    int roz_x, int roz_y, boolean wyslij_pionek,Circle ostatni_wyslij,Circle nowy_wyslij){
+    int roz_x, int roz_y, boolean wyslij_pionek,Circle ostatni_wyslij,Circle nowy_wyslij,Text historia_gry ){
         this.kwadraty_lista = kwadraty_lista;
         this.kola_red_lista = kola_red_lista;
         this.kola_white_lista = kola_white_lista;
@@ -58,6 +60,7 @@ public class Logika {
         this.wyslij_pionek = wyslij_pionek;
         this.ostatni_wyslij = ostatni_wyslij;
         this.nowy_wyslij = nowy_wyslij;
+        this.historia_gry = historia_gry;
     }
 
     public void ktoryPioenkCzerwone(Circle koloo){
@@ -193,6 +196,8 @@ public class Logika {
                 nowy_wyslij_x = ostatni_bialy.getCenterX();
                 nowy_wyslij_y = ostatni_bialy.getCenterY();
 
+
+                uaktualnij_historie();
                 wyslij_do_watku();
             }
             else if (bylruch){
@@ -204,6 +209,7 @@ public class Logika {
                 nowy_wyslij = ostatni_bialy;
                 nowy_wyslij_x = ostatni_bialy.getCenterX();
                 nowy_wyslij_y = ostatni_bialy.getCenterY();
+                uaktualnij_historie();
                 wyslij_do_watku();
             }
         }
@@ -366,6 +372,7 @@ public class Logika {
                 nowy_wyslij = ostatni_czerwony;
                 nowy_wyslij_x = ostatni_czerwony.getCenterX();
                 nowy_wyslij_y = ostatni_czerwony.getCenterY();
+                uaktualnij_historie();
 
                 wyslij_do_watku();
             }
@@ -379,6 +386,7 @@ public class Logika {
                 nowy_wyslij_x = ostatni_czerwony.getCenterX();
                 nowy_wyslij_y = ostatni_czerwony.getCenterY();
 
+                uaktualnij_historie();
                 wyslij_do_watku();
             }
 
@@ -655,6 +663,51 @@ public class Logika {
             }
 
         return false;
+    }
+
+    public void uaktualnij_historie(){
+        String pomw = new String();
+
+        if (ktory_gracz == 1){
+            pomw = "Czerwone ";
+        }
+        else {
+            pomw = "Biale         ";
+        }
+
+        int pomzam = (int) ostatni_wyslij_x;
+        pomzam = pomzam / roz_x;
+        pomw += String.valueOf(zworc_litere_szachwonicy(pomzam))  ;
+        historia_gry.setText(historia_gry.getText()+ pomw);
+
+        pomw = "";
+        pomzam = (int) ostatni_wyslij_y;
+        pomzam = pomzam / roz_y + 1;
+        pomw += String.valueOf(pomzam) + "  na   ";
+        historia_gry.setText(historia_gry.getText()+ pomw);
+
+        pomw = "";
+        pomzam = (int) nowy_wyslij.getCenterX();
+        pomzam = pomzam / roz_x;
+        pomw += String.valueOf(zworc_litere_szachwonicy(pomzam)) ;
+        historia_gry.setText(historia_gry.getText()+ pomw);
+
+        pomw = "";
+        pomzam = (int) nowy_wyslij.getCenterY();
+        pomzam = pomzam / roz_y + 1;
+        pomw += String.valueOf(pomzam) + "\n";
+        historia_gry.setText(historia_gry.getText()+ pomw);
+
+
+    }
+
+    public String zworc_litere_szachwonicy(int liczba){
+        String wyn = new String();
+        wyn = "";
+        char pomzam = (char) (97 + liczba);
+        wyn += pomzam;
+        return  wyn;
+
     }
 
 

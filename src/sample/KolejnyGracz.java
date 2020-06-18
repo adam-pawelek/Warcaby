@@ -12,6 +12,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import  javafx.scene.control.Button;
 import java.awt.*;
@@ -29,12 +30,13 @@ import java.io.*;
 
 public class KolejnyGracz extends Application {
     Stage window;
-    Scene scena_menu, scena_plansza, scena_zasady;
+    Scene scena_menu, scena_plansza, scena_zasady,scena_jednoosobowa;
 
     Button przycisk_stream;
-    Button przycisk_komputer;
+    Button przycisk_jednaos;
     Button przycisk_zasady;
     Button przycisk_menu_plansza;
+    Button przycisk_zagraj_od_nowa;
     LinkedList kwadraty_lista = new LinkedList<Rectangle>();
     LinkedList kola_red_lista = new LinkedList<Circle>();
     LinkedList kola_white_lista = new LinkedList<Circle>();
@@ -48,6 +50,7 @@ public class KolejnyGracz extends Application {
     boolean wyslij_pionek;
     Circle ostatni_wyslij;
     Circle nowy_wyslij;
+    Text historia_gry = new Text();
 
 
 
@@ -76,8 +79,8 @@ public class KolejnyGracz extends Application {
         przycisk_zasady.setText("Zasady");
         przycisk_stream = new Button();
         przycisk_stream.setText("Multiplayer");
-        przycisk_komputer = new Button();
-        przycisk_komputer.setText("komputer");
+        przycisk_jednaos = new Button();
+        przycisk_jednaos.setText("komputer");
 
         przycisk_menu_plansza = new Button();
         przycisk_menu_plansza.setText("Menu");
@@ -86,12 +89,13 @@ public class KolejnyGracz extends Application {
 
         // menu
         VBox layout  = new VBox(20);
-        layout.getChildren().addAll(przycisk_zasady,przycisk_stream,przycisk_komputer);
+        layout.getChildren().addAll(przycisk_zasady,przycisk_stream);
         scena_menu = new Scene(layout,1000,500);
         primaryStage.setScene(scena_menu);
         primaryStage.show();
         przycisk_zasady.setOnAction(e -> window.setScene(scena_zasady));
         przycisk_stream.setOnAction(e -> window.setScene(scena_plansza));
+        przycisk_jednaos.setOnAction(e -> window.setScene(scena_plansza));
 
 
 
@@ -108,116 +112,28 @@ public class KolejnyGracz extends Application {
 
         // tworzy plansze
         //Tworze plansze
-        Plansza plansza = new Plansza(kwadraty_lista,kola_red_lista,kola_white_lista,root,zajete_red,zajete_white,roz_x,roz_y,wyslij_pionek, ostatni_wyslij, nowy_wyslij);
+        Plansza plansza = new Plansza(kwadraty_lista,kola_red_lista,kola_white_lista,root,zajete_red,zajete_white,roz_x,roz_y,wyslij_pionek, ostatni_wyslij, nowy_wyslij,historia_gry );
         plansza.rysujKwadraty(roz_x,roz_y);
-        /*
-        int licz = 0;
-        for(int i = 0; i < 8; i++){
-            for(int j = 0; j < 8; j++){
-                Rectangle kwadratt = new Rectangle(roz_x * i,roz_y * j,roz_x,roz_y);
-                if (licz % 2 == 0) {
-                    kwadratt.setFill(AQUA);
-                }
-                else {
-                    kwadratt.setFill(BLACK);
-                }
-                kwadraty_lista.add(kwadratt);
 
-                root.getChildren().add(kwadratt);
-                licz+=1;
-            }
-            licz+=1;
-        }
-        */
-
-        //tworzy pionki
-        //czerwone
-        /*
-        int licz = 1;
-        for(int i = 0; i < 8; i++){
-            for(int j = 0; j < 3; j++){
-                Circle koloo = new Circle(roz_x * i + roz_x / 2,roz_y * j+ roz_y / 2,roz_x / 2);
-                if (licz % 2 == 0) {
-                    koloo.setFill(RED);
-                    koloo.setOnMouseClicked(e -> koloo.setCenterX(200));
-                    Pozycja pom = new Pozycja(roz_x * i,roz_y * j,roz_x,roz_y,koloo);
-                    zajete_red.add(pom);
-                }
-                else{
-                    licz+=1;
-                    continue;
-                }
-                kola_red_lista.add(koloo);
-                root.getChildren().add(koloo);
-                licz+=1;
-            }
-
-        }
-        */
         plansza.rysujCzerwone(roz_x,roz_y);
         plansza.rysujBiale(roz_x,roz_y);
 
-        //biale
-        /*
-        int licz = 0;
-        for(int i = 0; i < 8; i++){
-            for(int j = 5; j < 8; j++){
-                Circle koloo = new Circle(roz_x * i + roz_x / 2,roz_y * j+ roz_y / 2,roz_x / 2);
-                if (licz % 2 == 0) {
-                    koloo.setFill(WHITE);
-                    Pozycja pom = new Pozycja(roz_x * i,roz_y * j,roz_x,roz_y,koloo);
-                    zajete_white.add(pom);
-                }
-                else{
-                    licz+=1;
-                    continue;
-                }
-                kola_white_lista.add(koloo);
-                root.getChildren().add(koloo);
-                licz+=1;
-            }
-        }
-
-        /*
-         */
 
 
 
 
 
-
-        //czarne
-
-
-
-
-        //kwadrat
-        /*
-        Rectangle kwadrat = new Rectangle(100,100,100,100);
-        kwadrat.setOnMouseClicked(e -> System.out.println(kwadrat.getX()));
-        root.getChildren().add(kwadrat);
-
-
-
-
-
-        //kolo
-
-        Circle kolo = new Circle(150, 150, 50, AQUA);
-        kolo.setOnMouseClicked(e -> System.out.println("kolo"));
-        root.getChildren().add(kolo);
-
-
-*/
-
-
-
-        //Thread t1 = new Thread(new Serwer(kwadraty_lista,kola_red_lista,kola_white_lista,root,zajete_red,zajete_white,roz_x,roz_y, wyslij_pionek, ostatni_wyslij, nowy_wyslij));
-        //t1.start();
 
 
         Thread t1 = new Thread(new Klient(plansza));
         t1.start();
+
+
+        ///jednooosobowa
+
+
+
+
 
 
     }
