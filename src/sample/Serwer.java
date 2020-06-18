@@ -85,8 +85,8 @@ public class Serwer extends Thread{
         } catch (IOException e) {
             e.printStackTrace();
         }
-        pr.println("100 100 100 100");
-        pr.flush();
+      //  pr.println("100 100 100 100");
+      //  pr.flush();
 
         InputStreamReader in = null;
         try {
@@ -102,10 +102,6 @@ public class Serwer extends Thread{
         while (true) {
 
 
-            if (plansza.logika.wyslij_pionek) {
-                pr.println("25 75 700 500 ");
-                pr.flush();
-                System.out.println("DLACZEGOOOOOOOOOOOOOOOO");
                 /*
                 try {
                     str = bf.readLine();
@@ -115,7 +111,7 @@ public class Serwer extends Thread{
                 }
                 */
 
-            }
+
 
             if (str != null) {
                 System.out.println(str);

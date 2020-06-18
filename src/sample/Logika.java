@@ -35,6 +35,7 @@ public class Logika {
     public  double ostatni_wyslij_y;
     public  double nowy_wyslij_x;
     public double nowy_wyslij_y;
+    boolean ktos_bil;
 
 
     public Logika(LinkedList kwadraty_lista, LinkedList kola_red_lista, LinkedList kola_white_lista, Group root,LinkedList zajete_red, LinkedList zajete_white,
@@ -180,6 +181,7 @@ public class Logika {
                 nowy_wyslij = ostatni_bialy;
                 nowy_wyslij_x = ostatni_bialy.getCenterX();
                 nowy_wyslij_y = ostatni_bialy.getCenterY();
+                ktos_bil = true;
                 wyslij_do_watku();
             }
             else if (bylruch){
