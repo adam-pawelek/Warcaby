@@ -45,6 +45,7 @@ public class Main extends Application {
     Button przycisk_menu_jednoos;
     Button przycisk_pobierz_historie_je;
     Button przycisk_pobierz_historie_st;
+    Button nowa_gra_je;
 
     LinkedList kwadraty_lista = new LinkedList<Rectangle>();
     LinkedList kola_red_lista = new LinkedList<Circle>();
@@ -78,6 +79,7 @@ public class Main extends Application {
     Circle ostatni_wyslijv2;
     Circle nowy_wyslijv2;
     Text historia_gryv2 = new Text();
+    Plansza plansza_jednoosobowa;
 
 
 
@@ -164,6 +166,8 @@ public class Main extends Application {
 
         przycisk_pobierz_historie_st = new Button();
         przycisk_pobierz_historie_st.setText("Pobierz Historie");
+        przycisk_pobierz_historie_st.setLayoutX(600);
+        przycisk_pobierz_historie_st.setLayoutY(350);
         przycisk_pobierz_historie_st.setOnAction(e -> {
             Formatter plik;
             try {
@@ -221,8 +225,14 @@ public class Main extends Application {
 
         //gra jednooosobowa
 
+        Group layout_jednoosobowa = new Group();
+
+
+
         przycisk_pobierz_historie_je = new Button();
         przycisk_pobierz_historie_je.setText("Pobierz Historie");
+        przycisk_pobierz_historie_je.setLayoutX(600);
+        przycisk_pobierz_historie_je.setLayoutY(350);
         przycisk_pobierz_historie_je.setOnAction(e -> {
             Formatter plik;
             try {
@@ -242,11 +252,11 @@ public class Main extends Application {
         przycisk_menu_jednoos.setLayoutX(400);
         przycisk_menu_jednoos.setLayoutY(200);
 
-        Group layout_jednoosobowa = new Group();
+
         scena_jednoosobowa = new Scene(layout_jednoosobowa,1000,500);
         layout_jednoosobowa.getChildren().addAll(przycisk_menu_jednoos);
 
-        Plansza plansza_jednoosobowa = new Plansza(kwadraty_listav2,kola_red_listav2,kola_white_listav2,layout_jednoosobowa,zajete_redv2,zajete_whitev2,roz_xv2,roz_yv2,wyslij_pionekv2, ostatni_wyslijv2, nowy_wyslijv2,historia_gryv2 );
+        plansza_jednoosobowa = new Plansza(kwadraty_listav2,kola_red_listav2,kola_white_listav2,layout_jednoosobowa,zajete_redv2,zajete_whitev2,roz_xv2,roz_yv2,wyslij_pionekv2, ostatni_wyslijv2, nowy_wyslijv2,historia_gryv2 );
         plansza_jednoosobowa.rysujKwadraty(roz_x,roz_y);
         plansza_jednoosobowa.rysujCzerwone(roz_x,roz_y);
         plansza_jednoosobowa.rysujBiale(roz_x,roz_y);
@@ -265,6 +275,33 @@ public class Main extends Application {
        // layout_jednoosobowa.getChildren().add(historia_gryv2);
         layout_jednoosobowa.getChildren().add(przycisk_pobierz_historie_je);
 
+        nowa_gra_je = new Button();
+        nowa_gra_je.setText("Nowa Gra");
+        nowa_gra_je.setLayoutX(600);
+        nowa_gra_je.setLayoutY(450);
+        nowa_gra_je.setOnAction(e->{
+            LinkedList kwadraty_listav2 = new LinkedList<Rectangle>();
+            LinkedList kola_red_listav2 = new LinkedList<Circle>();
+            LinkedList kola_white_listav2 = new LinkedList<Circle>();
+
+            LinkedList zajete_redv2 = new LinkedList<Pozycja>();
+
+            LinkedList zajete_whitev2 = new LinkedList<Pozycja>();
+            boolean wyslij_pionekv2 = false;
+            Circle ostatni_wyslijv2 = null;
+            Circle nowy_wyslijv2 = null;
+
+            historia_gryv2.setText("Historia GRY \n");
+            layout_jednoosobowa.getChildren().clear();
+            layout_jednoosobowa.getChildren().addAll(nowa_gra_je, przycisk_pobierz_historie_je, przycisk_menu_jednoos, skrolowaniev2);
+            plansza_jednoosobowa = new Plansza(kwadraty_listav2,kola_red_listav2,kola_white_listav2,layout_jednoosobowa,zajete_redv2,zajete_whitev2,roz_xv2,roz_yv2,wyslij_pionekv2, ostatni_wyslijv2, nowy_wyslijv2,historia_gryv2 );
+            plansza_jednoosobowa.rysujKwadraty(roz_x,roz_y);
+            plansza_jednoosobowa.rysujCzerwone(roz_x,roz_y);
+            plansza_jednoosobowa.rysujBiale(roz_x,roz_y);
+
+
+        });
+        layout_jednoosobowa.getChildren().add(nowa_gra_je);
 
 
 
@@ -272,10 +309,7 @@ public class Main extends Application {
 
 
 
-
-
-
-
+        
 
 
         //Thread t1 = new Thread(new Serwer(kwadraty_lista,kola_red_lista,kola_white_lista,root,zajete_red,zajete_white,roz_x,roz_y, wyslij_pionek, ostatni_wyslij, nowy_wyslij));
