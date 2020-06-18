@@ -12,6 +12,9 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import  javafx.scene.control.Button;
 import java.awt.*;
@@ -27,14 +30,18 @@ import static javafx.scene.paint.Color.*;
 import java.net.*;
 import java.io.*;
 
+
+import javafx.scene.text.Font.*;
 public class Main extends Application {
     Stage window;
     Scene scena_menu, scena_plansza, scena_zasady;
 
-    Button przycisk_mulitiplayer;
+    Button przycisk_stream;
     Button przycisk_komputer;
     Button przycisk_zasady;
-    Button przycisk_menu;
+    Button przycisk_menu_plansza;
+    Button przycisk_menu_zasady;
+
     LinkedList kwadraty_lista = new LinkedList<Rectangle>();
     LinkedList kola_red_lista = new LinkedList<Circle>();
     LinkedList kola_white_lista = new LinkedList<Circle>();
@@ -74,36 +81,65 @@ public class Main extends Application {
         //przycisk1
         przycisk_zasady = new Button();
         przycisk_zasady.setText("Zasady");
-        przycisk_mulitiplayer = new Button();
-        przycisk_mulitiplayer.setText("Multiplayer");
+        przycisk_stream = new Button();
+        przycisk_stream.setText("Stream");
         przycisk_komputer = new Button();
         przycisk_komputer.setText("komputer");
 
-        przycisk_menu = new Button();
-        przycisk_menu.setText("Menu");
-        przycisk_menu.setOnAction(e -> window.setScene(scena_menu));
+        przycisk_menu_plansza = new Button();
+        przycisk_menu_plansza.setText("Menu");
+        przycisk_menu_plansza.setOnAction(e -> window.setScene(scena_menu));
+        przycisk_menu_plansza.setLayoutX(600);
+        przycisk_menu_plansza.setLayoutY(400);
 
 
         // menu
         VBox layout  = new VBox(20);
-        layout.getChildren().addAll(przycisk_zasady,przycisk_mulitiplayer,przycisk_komputer);
+        layout.getChildren().addAll(przycisk_zasady, przycisk_stream,przycisk_komputer);
         scena_menu = new Scene(layout,1000,500);
         primaryStage.setScene(scena_menu);
         primaryStage.show();
         przycisk_zasady.setOnAction(e -> window.setScene(scena_zasady));
-        przycisk_mulitiplayer.setOnAction(e -> window.setScene(scena_plansza));
+        przycisk_stream.setOnAction(e -> window.setScene(scena_plansza));
 
 
 
         //zasady
-        StackPane layout2 = new StackPane();
-        layout2.getChildren().addAll(przycisk_menu);
+        Group layout2 = new Group();
+        przycisk_menu_zasady = new Button();
+        layout2.getChildren().addAll(przycisk_menu_zasady);
+
+        przycisk_menu_zasady.setOnAction(e -> window.setScene(scena_menu));
+        przycisk_menu_zasady.setLayoutX(50);
+        przycisk_menu_zasady.setLayoutY(400);
+        przycisk_menu_zasady.setText("menu");
+        Text text_zasady = new Text();
+        text_zasady.setText("Zasady zastosowane przezemnie sa polaczeniem zasad Polskich i angielskich \n " +
+                "Pionek moze poruszac sie do przodu i bic \n" +
+                "Pionek jesli zaczal bicie musi je skonczyc (wykonac wszystkie mozliwe bicia) \n" +
+                "Bicie nie jest konieczne \n" +
+                "Bicie jest mozliwe zarowno do przodu jak i do tylu \n" +
+                "W momecie kiedy dojdziemy na drugi koniec planszy dostaniemy krola \n"+
+                 "W porownaniu z pionkiem krol moze jeszcze poruszac sie w tyl \n\n\n" +
+                "Gra posiada wiele odmian, spośród których uważane za dyscyplinę \n" +
+                "sportową są jedynie warcaby polskie (stupolowe) nazywane też międzynarodowymi. \n" +
+                "W większości krajów gra odbywa się jednak przeważnie na warcabnicy posiadającej 64 pola \n" +
+                "(często zastępowanej szachownicą), z wykorzystaniem 24 pionków (po 12 dla każdego z graczy).");
+
+        text_zasady.setX(200);
+        text_zasady.setY(100);
+        text_zasady.setScaleX(1.5);
+        text_zasady.setScaleY(1.5);
+
+        layout2.getChildren().addAll(text_zasady);
+
+
         scena_zasady = new Scene(layout2,1000,500);
 
         //plansza
         Group root = new Group();
         scena_plansza = new Scene(root,1000,500);
-        root.getChildren().add(przycisk_menu);
+        root.getChildren().add(przycisk_menu_plansza);
 
 
         // tworzy plansze

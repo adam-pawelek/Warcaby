@@ -31,10 +31,10 @@ public class KolejnyGracz extends Application {
     Stage window;
     Scene scena_menu, scena_plansza, scena_zasady;
 
-    Button przycisk_mulitiplayer;
+    Button przycisk_stream;
     Button przycisk_komputer;
     Button przycisk_zasady;
-    Button przycisk_menu;
+    Button przycisk_menu_plansza;
     LinkedList kwadraty_lista = new LinkedList<Rectangle>();
     LinkedList kola_red_lista = new LinkedList<Circle>();
     LinkedList kola_white_lista = new LinkedList<Circle>();
@@ -74,36 +74,36 @@ public class KolejnyGracz extends Application {
         //przycisk1
         przycisk_zasady = new Button();
         przycisk_zasady.setText("Zasady");
-        przycisk_mulitiplayer = new Button();
-        przycisk_mulitiplayer.setText("Multiplayer");
+        przycisk_stream = new Button();
+        przycisk_stream.setText("Multiplayer");
         przycisk_komputer = new Button();
         przycisk_komputer.setText("komputer");
 
-        przycisk_menu = new Button();
-        przycisk_menu.setText("Menu");
-        przycisk_menu.setOnAction(e -> window.setScene(scena_menu));
+        przycisk_menu_plansza = new Button();
+        przycisk_menu_plansza.setText("Menu");
+        przycisk_menu_plansza.setOnAction(e -> window.setScene(scena_menu));
 
 
         // menu
         VBox layout  = new VBox(20);
-        layout.getChildren().addAll(przycisk_zasady,przycisk_mulitiplayer,przycisk_komputer);
+        layout.getChildren().addAll(przycisk_zasady,przycisk_stream,przycisk_komputer);
         scena_menu = new Scene(layout,1000,500);
         primaryStage.setScene(scena_menu);
         primaryStage.show();
         przycisk_zasady.setOnAction(e -> window.setScene(scena_zasady));
-        przycisk_mulitiplayer.setOnAction(e -> window.setScene(scena_plansza));
+        przycisk_stream.setOnAction(e -> window.setScene(scena_plansza));
 
 
 
         //zasady
         StackPane layout2 = new StackPane();
-        layout2.getChildren().addAll(przycisk_menu);
+        layout2.getChildren().addAll(przycisk_menu_plansza);
         scena_zasady = new Scene(layout2,1000,500);
 
         //plansza
         Group root = new Group();
         scena_plansza = new Scene(root,1000,500);
-        root.getChildren().add(przycisk_menu);
+        root.getChildren().add(przycisk_menu_plansza);
 
 
         // tworzy plansze

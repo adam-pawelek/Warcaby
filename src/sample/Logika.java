@@ -8,12 +8,17 @@ import javafx.scene.shape.Rectangle;
 import java.util.LinkedList;
 import java.math.*;
 
+import static javafx.scene.paint.Color.*;
+
 public class Logika {
     LinkedList <Rectangle> kwadraty_lista;// = new LinkedList<Rectangle>();
     LinkedList <Circle> kola_red_lista;
     LinkedList <Circle> kola_white_lista;
     LinkedList zajete_red = new LinkedList<Pozycja>();
     LinkedList zajete_white = new LinkedList<Pozycja>();
+
+    LinkedList krole_czerowne = new LinkedList<Pozycja>();
+    LinkedList krole_biale = new LinkedList<Pozycja>();
     Group root;
     int ostatni_x_red;
     int ostatni_y_red;
@@ -167,6 +172,10 @@ public class Logika {
          //   System.out.println("Ruch biale");
             bylruch =  ruchBialePrawo(kwadrat) || bylruch;
             bylruch = ruchBialeLewo(kwadrat) || bylruch;
+            if(czyJestKrolem_biale(ostatni_bialy)){
+                bylruch = ruchBialeLewooDol(kwadrat) || bylruch;
+                bylruch = ruchBialePrawoDol(kwadrat) || bylruch;
+            }
             bialyBil = bijBialePrawoGora(kwadrat) || bialyBil;
             bialyBil = bijBialeLewoGora(kwadrat) || bialyBil;
             bialyBil = bijBialeLewoDol(kwadrat) || bialyBil;
@@ -198,6 +207,7 @@ public class Logika {
                 wyslij_do_watku();
             }
         }
+        uaktualnij_krole_biale();
 
 
     }
@@ -214,6 +224,27 @@ public class Logika {
     public boolean ruchBialeLewo(Rectangle kwadrat){
        // System.out.println("asdfasdf");
         if (to_pole_dozwolone(ostatni_bialy.getCenterX() - roz_x,ostatni_bialy.getCenterY() - roz_y,kwadrat)){
+            ostatni_bialy.setCenterX(kwadrat.getX() + roz_x / 2);
+            ostatni_bialy.setCenterY(kwadrat.getY() + roz_y / 2);
+            return  true;
+        }
+        return false;
+    }
+
+    // To dla krola
+    public boolean ruchBialePrawoDol(Rectangle kwadrat){
+        // System.out.println("asdfasdf");
+        if (to_pole_dozwolone(ostatni_bialy.getCenterX() + roz_x,ostatni_bialy.getCenterY() + roz_y,kwadrat)){
+            ostatni_bialy.setCenterX(kwadrat.getX() + roz_x / 2);
+            ostatni_bialy.setCenterY(kwadrat.getY() + roz_y / 2);
+            return  true;
+        }
+        return false;
+    }
+    // To dla krola
+    public boolean ruchBialeLewooDol(Rectangle kwadrat){
+        // System.out.println("asdfasdf");
+        if (to_pole_dozwolone(ostatni_bialy.getCenterX() - roz_x,ostatni_bialy.getCenterY() + roz_y,kwadrat)){
             ostatni_bialy.setCenterX(kwadrat.getX() + roz_x / 2);
             ostatni_bialy.setCenterY(kwadrat.getY() + roz_y / 2);
             return  true;
@@ -310,8 +341,12 @@ public class Logika {
         ostatni_wyslij_y = ostatni_czerwony.getCenterY();
         if(!to_pole_zawiera(kwadrat)){
           //  System.out.println("Ruch czerwoen");
-            bylruch = bylruch || ruchCzerwonePrawo(kwadrat);
-            bylruch = bylruch || ruchCzerwoneLewo(kwadrat);
+            bylruch = ruchCzerwonePrawo(kwadrat) || bylruch;
+            bylruch = ruchCzerwoneLewo(kwadrat) || bylruch;
+            if(czyJestKrolem_czerwone(ostatni_czerwony)){
+                bylruch = ruchCzerwonePrawoDol(kwadrat) || bylruch;
+                bylruch = ruchCzerwoneLewoDol(kwadrat) || bylruch;
+            }
             czerwonyBil =  bijCzerwoneLewoDol(kwadrat) || czerwonyBil;
             czerwonyBil =  bijCzerwonePrawoDol(kwadrat) || czerwonyBil;
             czerwonyBil =  bijCzerwoneLewoGora(kwadrat) || czerwonyBil;
@@ -350,7 +385,7 @@ public class Logika {
 
 
         }
-
+        uaktualnij_krole_czerwone();
 
     }
 
@@ -409,6 +444,32 @@ public class Logika {
         return false;
 
     }
+
+    //to jest dla krola
+    public  boolean ruchCzerwonePrawoDol(Rectangle kwadrat){
+        //  System.out.println("asdfasdf");
+        if (to_pole_dozwolone(ostatni_czerwony.getCenterX() + roz_x,ostatni_czerwony.getCenterY() - roz_y,kwadrat)){
+            ostatni_czerwony.setCenterX(kwadrat.getX() + roz_x / 2);
+            ostatni_czerwony.setCenterY(kwadrat.getY() + roz_y / 2);
+            return  true;
+        }
+        return false;
+
+    }
+    //to dla krola
+    public  boolean ruchCzerwoneLewoDol(Rectangle kwadrat){
+        //  System.out.println("asdfasdf");
+        if (to_pole_dozwolone(ostatni_czerwony.getCenterX() - roz_x,ostatni_czerwony.getCenterY() - roz_y,kwadrat)){
+            ostatni_czerwony.setCenterX(kwadrat.getX() + roz_x / 2);
+            ostatni_czerwony.setCenterY(kwadrat.getY() + roz_y / 2);
+            return  true;
+        }
+        return false;
+
+    }
+
+
+
 
     public boolean bijCzerwoneLewoDol(Rectangle kwadrat){
         if (to_pole_dozwolone(ostatni_czerwony.getCenterX() - roz_x * 2,ostatni_czerwony.getCenterY() + roz_y * 2,kwadrat)) {
@@ -540,6 +601,9 @@ public class Logika {
 
         koloo.setCenterX(teraz_poz_x);
         koloo.setCenterY(teraz_poz_y);
+        uaktualnij_krole_biale();
+        uaktualnij_krole_czerwone();
+
     }
 
     public  void wyslij_do_watku(){
@@ -551,6 +615,46 @@ public class Logika {
 
     public  boolean stan_wyslij_pionek(){
         return wyslij_pionek;
+    }
+
+    public boolean uaktualnij_krole_biale(){
+        for(Circle koloo: kola_white_lista){
+            if (koloo.getCenterY() < roz_y && !krole_biale.contains(koloo)){
+                krole_biale.add(koloo);
+                koloo.setFill(DARKBLUE);
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    public boolean uaktualnij_krole_czerwone(){
+        for(Circle koloo: kola_red_lista){
+            if (koloo.getCenterY() > 7* roz_y && !krole_czerowne.contains(koloo)){
+                krole_czerowne.add(koloo);
+                koloo.setFill(DARKGOLDENROD);
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean czyJestKrolem_biale(Circle koloo){
+
+            if (krole_biale.contains(koloo)){
+                return true;
+            }
+
+        return false;
+    }
+
+    public boolean czyJestKrolem_czerwone(Circle koloo){
+
+            if (krole_czerowne.contains(koloo)){
+                return true;
+            }
+
+        return false;
     }
 
 

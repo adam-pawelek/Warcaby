@@ -49,6 +49,7 @@ public class Klient implements Runnable{
            // pr.flush();
             try {
                 str = bf.readLine();
+                
             } catch (IOException e) {
                 e.printStackTrace();
             }
