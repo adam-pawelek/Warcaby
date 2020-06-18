@@ -114,19 +114,34 @@ public class Main extends Application {
         przycisk_menu_plansza = new Button();
         przycisk_menu_plansza.setText("Menu");
         przycisk_menu_plansza.setOnAction(e -> window.setScene(scena_menu));
-        przycisk_menu_plansza.setLayoutX(600);
-        przycisk_menu_plansza.setLayoutY(400);
+        przycisk_menu_plansza.setLayoutX(450);
+        przycisk_menu_plansza.setLayoutY(300);
 
 
         // menu
-        VBox layout  = new VBox(20);
+        Group layout  = new Group();
         layout.getChildren().addAll(przycisk_zasady, przycisk_stream, przycisk_jednaos);
-        scena_menu = new Scene(layout,1000,500);
+        scena_menu = new Scene(layout,700,500);
         primaryStage.setScene(scena_menu);
         primaryStage.show();
+        przycisk_stream.setLayoutX(200);
+        przycisk_stream.setLayoutY(250);
+        przycisk_zasady.setLayoutX(300);
+        przycisk_zasady.setLayoutY(250);
+        przycisk_jednaos.setLayoutX(400);
+        przycisk_jednaos.setLayoutY(250);
+
         przycisk_zasady.setOnAction(e -> window.setScene(scena_zasady));
         przycisk_stream.setOnAction(e -> window.setScene(scena_plansza));
         przycisk_jednaos.setOnAction(e -> window.setScene(scena_jednoosobowa));
+
+        Text tytul = new Text();
+        tytul.setText("WARCABY wykonal \nAdam Pawelek\nkliknij w przycisk");
+        tytul.setScaleX(2.5);
+        tytul.setScaleY(2.5);
+        tytul.setX(300);
+        tytul.setY(100);
+        layout.getChildren().add(tytul);
 
 
 
@@ -148,25 +163,25 @@ public class Main extends Application {
                 "W momecie kiedy dojdziemy na drugi koniec planszy dostaniemy krola \n"+
                  "W porownaniu z pionkiem krol moze jeszcze poruszac sie w tyl \n\n\n" +
                 "Gra posiada wiele odmian, spośród których uważane za dyscyplinę \n" +
-                "sportową są jedynie warcaby polskie (stupolowe) nazywane też międzynarodowymi. \n" +
-                "W większości krajów gra odbywa się jednak przeważnie na warcabnicy posiadającej 64 pola \n" +
-                "(często zastępowanej szachownicą), z wykorzystaniem 24 pionków (po 12 dla każdego z graczy).");
+                "sportową są jedynie warcaby polskie (stupolowe) \n nazywane też międzynarodowymi. " +
+                "W większości krajów gra odbywa się jednak \n przeważnie  na warcabnicy posiadającej 64 pola " +
+                "(często zastępowanej \n szachownicą),  z wykorzystaniem 24 pionków (po 12 dla każdego z graczy).");
 
-        text_zasady.setX(200);
-        text_zasady.setY(100);
-        text_zasady.setScaleX(1.5);
-        text_zasady.setScaleY(1.5);
+        text_zasady.setX(100);
+        text_zasady.setY(50);
+        text_zasady.setScaleX(1.3);
+        text_zasady.setScaleY(1.3);
 
         layout2.getChildren().addAll(text_zasady);
 
 
-        scena_zasady = new Scene(layout2,1000,500);
+        scena_zasady = new Scene(layout2,700,500);
 
         //plansza
 
         przycisk_pobierz_historie_st = new Button();
         przycisk_pobierz_historie_st.setText("Pobierz Historie");
-        przycisk_pobierz_historie_st.setLayoutX(600);
+        przycisk_pobierz_historie_st.setLayoutX(450);
         przycisk_pobierz_historie_st.setLayoutY(350);
         przycisk_pobierz_historie_st.setOnAction(e -> {
             Formatter plik;
@@ -187,11 +202,11 @@ public class Main extends Application {
 
 
         Group root = new Group();
-        scena_plansza = new Scene(root,1000,500);
+        scena_plansza = new Scene(root,700,500);
         root.getChildren().add(przycisk_menu_plansza);
 
         historia_gry.setText("Historia GRY \n");
-        historia_gry.setLayoutX(600);
+        historia_gry.setLayoutX(450);
         historia_gry.setLayoutY(100);
        // root.getChildren().add(historia_gry);
 
@@ -209,8 +224,8 @@ public class Main extends Application {
         skrolowanie.setMinSize(170, 150);
         skrolowanie.setMaxSize(200,170);
         skrolowanie.setVisible(true);
-        skrolowanie.setLayoutX(600);
-        skrolowanie.setLayoutY(100);
+        skrolowanie.setLayoutX(450);
+        skrolowanie.setLayoutY(50);
         root.getChildren().add(skrolowanie);
         root.getChildren().add(przycisk_pobierz_historie_st);
 
@@ -231,8 +246,8 @@ public class Main extends Application {
 
         przycisk_pobierz_historie_je = new Button();
         przycisk_pobierz_historie_je.setText("Pobierz Historie");
-        przycisk_pobierz_historie_je.setLayoutX(600);
-        przycisk_pobierz_historie_je.setLayoutY(350);
+        przycisk_pobierz_historie_je.setLayoutX(450);
+        przycisk_pobierz_historie_je.setLayoutY(300);
         przycisk_pobierz_historie_je.setOnAction(e -> {
             Formatter plik;
             try {
@@ -249,11 +264,11 @@ public class Main extends Application {
         przycisk_menu_jednoos = new Button();
         przycisk_menu_jednoos.setText("Menu");
         przycisk_menu_jednoos.setOnAction(e -> window.setScene(scena_menu));
-        przycisk_menu_jednoos.setLayoutX(400);
-        przycisk_menu_jednoos.setLayoutY(200);
+        przycisk_menu_jednoos.setLayoutX(450);
+        przycisk_menu_jednoos.setLayoutY(250);
 
 
-        scena_jednoosobowa = new Scene(layout_jednoosobowa,1000,500);
+        scena_jednoosobowa = new Scene(layout_jednoosobowa,700,500);
         layout_jednoosobowa.getChildren().addAll(przycisk_menu_jednoos);
 
         plansza_jednoosobowa = new Plansza(kwadraty_listav2,kola_red_listav2,kola_white_listav2,layout_jednoosobowa,zajete_redv2,zajete_whitev2,roz_xv2,roz_yv2,wyslij_pionekv2, ostatni_wyslijv2, nowy_wyslijv2,historia_gryv2 );
@@ -269,16 +284,16 @@ public class Main extends Application {
         skrolowaniev2.setMinSize(170, 150);
         skrolowaniev2.setMaxSize(200,170);
         skrolowaniev2.setVisible(true);
-        skrolowaniev2.setLayoutX(600);
-        skrolowaniev2.setLayoutY(100);
+        skrolowaniev2.setLayoutX(450);
+        skrolowaniev2.setLayoutY(50);
         layout_jednoosobowa.getChildren().add(skrolowaniev2);
        // layout_jednoosobowa.getChildren().add(historia_gryv2);
         layout_jednoosobowa.getChildren().add(przycisk_pobierz_historie_je);
 
         nowa_gra_je = new Button();
         nowa_gra_je.setText("Nowa Gra");
-        nowa_gra_je.setLayoutX(600);
-        nowa_gra_je.setLayoutY(450);
+        nowa_gra_je.setLayoutX(450);
+        nowa_gra_je.setLayoutY(350);
         nowa_gra_je.setOnAction(e->{
             LinkedList kwadraty_listav2 = new LinkedList<Rectangle>();
             LinkedList kola_red_listav2 = new LinkedList<Circle>();
@@ -309,7 +324,7 @@ public class Main extends Application {
 
 
 
-        
+
 
 
         //Thread t1 = new Thread(new Serwer(kwadraty_lista,kola_red_lista,kola_white_lista,root,zajete_red,zajete_white,roz_x,roz_y, wyslij_pionek, ostatni_wyslij, nowy_wyslij));
