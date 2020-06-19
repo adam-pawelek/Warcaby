@@ -20,7 +20,9 @@ import javafx.scene.shape.Rectangle;
 import java.util.LinkedList;
 
 
-
+/**
+ * Klasa do obslugi serwera
+ */
 
 public class Serwer extends Thread{
     LinkedList <Rectangle> kwadraty_lista;// = new LinkedList<Rectangle>();

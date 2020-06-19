@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"sample","l":"Controller"},{"p":"sample","l":"Klient"},{"p":"sample","l":"KolejnyGracz"},{"p":"sample","l":"Logika"},{"p":"sample","l":"Main"},{"p":"sample","l":"Plansza"},{"p":"sample","l":"Pozycja"},{"p":"sample","l":"Serwer"},{"p":"sample","l":"UaktualnijPlansze"}]

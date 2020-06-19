@@ -33,6 +33,7 @@ import java.io.*;
  * Klasa potrzebna do odbioru streema
  */
 public class KolejnyGracz extends Application {
+    Thread t1;
     Stage window;
     Scene scena_menu, scena_plansza, scena_zasady,scena_jednoosobowa;
 
@@ -78,6 +79,7 @@ public class KolejnyGracz extends Application {
 
 
         window = primaryStage;
+        window.setOnCloseRequest(e->t1.stop());
         //przycisk1
         przycisk_zasady = new Button();
         przycisk_zasady.setText("Zasady");
@@ -89,7 +91,6 @@ public class KolejnyGracz extends Application {
         przycisk_menu_plansza = new Button();
         przycisk_menu_plansza.setText("Menu");
         przycisk_menu_plansza.setOnAction(e -> window.setScene(scena_menu));
-        
 
 
         // menu
@@ -130,7 +131,7 @@ public class KolejnyGracz extends Application {
 
 
 
-        Thread t1 = new Thread(new Klient(plansza));
+        t1 = new Thread(new Klient(plansza));
         t1.start();
 
 

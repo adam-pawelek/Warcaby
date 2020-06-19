@@ -124,6 +124,8 @@ public class Main extends Application {
         przycisk_menu_plansza.setLayoutX(450);
         przycisk_menu_plansza.setLayoutY(300);
 
+        window.setOnCloseRequest(e->t1.stop());
+
 
         // menu
         Group layout  = new Group();
@@ -340,6 +342,7 @@ public class Main extends Application {
 
         t1 = new Thread(new Serwer(plansza));
         t1.start();
+
 
 
     }
