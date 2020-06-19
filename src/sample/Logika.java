@@ -49,6 +49,7 @@ public class Logika {
     public int poz_usun_x;
     public int poz_usun_y;
     Text historia_gry;
+    Text napisz_ktory_gracz;
 
     /**
      *  Konstruktor klasy
@@ -81,20 +82,44 @@ public class Logika {
         this.ostatni_wyslij = ostatni_wyslij;
         this.nowy_wyslij = nowy_wyslij;
         this.historia_gry = historia_gry;
+        napisz_ktory_gracz = new Text();
+        napisz_ktory_gracz.setText("Czerwony zaczyna");
+        napisz_ktory_gracz.setX(450);
+        napisz_ktory_gracz.setY(20);
+        root.getChildren().add(napisz_ktory_gracz);
     }
 
     public void ktoryPioenkCzerwone(Circle koloo){
 
             ostatni_x_red = (int) koloo.getCenterX();
             ostatni_y_red = (int) koloo.getCenterY();
+            if (ostatni_czerwony != null) {
+                 ostatni_czerwony.setFill(RED);
+                 if (czyJestKrolem_czerwone(ostatni_czerwony)){
+                     ostatni_czerwony.setFill(DARKGOLDENROD);
+                 }
+            }
             ostatni_czerwony = koloo;
+            if (ktory_gracz == 0) {
+                ostatni_czerwony.setFill(DARKMAGENTA);
+
+            }
          //   System.out.println("kolo czerwone");
 
 
     }
     public  void  ktoryPionekBiale(Circle koloo){
-
+        if (ostatni_bialy != null) {
+            ostatni_bialy.setFill(WHITE);
+            if(czyJestKrolem_biale(ostatni_bialy)){
+                ostatni_bialy.setFill(DARKBLUE);
+            }
+        }
             ostatni_bialy = koloo;
+            if(ktory_gracz == 1) {
+                ostatni_bialy.setFill(GREEN);
+            }
+
 
     }
 
@@ -105,6 +130,7 @@ public class Logika {
     public  void  nacisnietyKwadrat(Rectangle kwadrat){
       //  System.out.println("Kwadrat");
         if (ktory_gracz == 0){
+
             ruchCzerwone(kwadrat);
         }
         else {
@@ -276,6 +302,11 @@ public class Logika {
                 nowy_wyslij = ostatni_bialy;
                 nowy_wyslij_x = ostatni_bialy.getCenterX();
                 nowy_wyslij_y = ostatni_bialy.getCenterY();
+                napisz_ktory_gracz.setText("Ruch Czerwony");
+                ostatni_bialy.setFill(WHITE);
+                if(czyJestKrolem_biale(ostatni_bialy)){
+                    ostatni_bialy.setFill(DARKBLUE);
+                }
                 uaktualnij_historie();
                 wyslij_do_watku();
             }
@@ -504,6 +535,14 @@ public class Logika {
                 nowy_wyslij = ostatni_czerwony;
                 nowy_wyslij_x = ostatni_czerwony.getCenterX();
                 nowy_wyslij_y = ostatni_czerwony.getCenterY();
+
+
+                napisz_ktory_gracz.setText("Ruch Bialy");
+                ostatni_czerwony.setFill(RED);
+                if (czyJestKrolem_czerwone(ostatni_czerwony)){
+                    ostatni_czerwony.setFill(DARKGOLDENROD);
+                }
+
 
                 uaktualnij_historie();
                 wyslij_do_watku();
@@ -833,6 +872,8 @@ public class Logika {
                 return true;
             }
         }
+
+
         return false;
     }
 
