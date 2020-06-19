@@ -24,6 +24,11 @@ import static javafx.application.Application.launch;
 import static javafx.scene.paint.Color.*;
 
 
+/**
+ * Klasa jest potrzebna do rysowania planszy
+ */
+
+
 public class Plansza {
     LinkedList kwadraty_lista ;
     LinkedList kola_red_lista;
@@ -39,6 +44,24 @@ public class Plansza {
     Circle nowy_wyslij;
     Text tekst = new Text("asdf");
     Text historia_gry;
+
+    /***
+     * Konstruktor funkcji
+     * @param kwadraty_lista  kwadratowa plansza
+     * @param kola_red_lista  lista czerwonych pionkow
+     * @param kola_white_lista  lista bialych pionkow
+     * @param root  layout sceny
+     * @param zajete_red  lista zajetych czerwonych
+     * @param zajete_white lista zajetych bialych
+     * @param roz_x  rozmiar x kwadratu planszy
+     * @param roz_y   rozmiar y kwadratu planszy
+     * @param wyslij_pionek  czy ma wyslac pionek do klienta
+     * @param ostatni_wyslij  ostatni pionek ktorym sie ruszylem do wyslania
+     * @param nowy_wyslij   nowa pozycja pionka ktara sie ruszylem do wyslania
+     * @param historia_gry  historia gry jako text
+     */
+
+
     public Plansza(LinkedList kwadraty_lista,LinkedList kola_red_lista,LinkedList kola_white_lista,Group root,LinkedList zajete_red,LinkedList zajete_white,
                    int roz_x, int roz_y,boolean wyslij_pionek,Circle ostatni_wyslij,Circle nowy_wyslij,Text historia_gry){
         this.kwadraty_lista = kwadraty_lista;
@@ -58,6 +81,12 @@ public class Plansza {
         root.getChildren().add(tekst);
         this.historia_gry = historia_gry;
     }
+
+    /**
+     * Funkcja rysujaca plansze
+     * @param roz_x  rozmiar x kwadratu planszy
+     * @param roz_y  rozmiar y kwadratu planszy
+     */
 
     public void rysujKwadraty(int roz_x, int roz_y){
         int licz = 0;
@@ -80,6 +109,11 @@ public class Plansza {
         }
     }
 
+    /**
+     * Metoda rysujaca czerwone pionki
+     * @param roz_x - rozmiar x kwadratu planszy
+     * @param roz_y rozmiar y kwadratu planszy
+     */
     public void  rysujCzerwone(int roz_x, int roz_y){
         int licz = 1;
         for(int i = 0; i < 8; i++){
@@ -103,6 +137,11 @@ public class Plansza {
         }
     }
 
+    /**
+     * Metoda rysujaca biale pionki
+     * @param roz_x - rozmiar x kwadratu planszy
+     * @param roz_y rozmiar y kwadratu planszy
+     */
     public  void  rysujBiale(int roz_x, int roz_y){
         int licz = 0;
         for(int i = 0; i < 8; i++){

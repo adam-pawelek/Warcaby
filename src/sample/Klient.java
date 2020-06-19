@@ -7,11 +7,18 @@ import java.io.*;
 
 import javafx.concurrent.Task;
 
-
+/**
+ * Klasa potrzeban do odbierania danych od serwera
+ */
 public class Klient implements Runnable{
     sample.Plansza plansza;
     String str;
     String poprzedni = new String();
+
+    /**
+     * Konstruktor klienta
+     * @param plansza Plansza na ktorej gra gracz
+     */
     public Klient(sample.Plansza plansza){
         this.plansza = plansza;
     }
@@ -85,6 +92,13 @@ public class Klient implements Runnable{
 
 
     }
+
+    /**
+     * Funkcja potrzebna do odczytania otrzymanej wiadomosci
+     * @param str otrzyamany string
+     * @param ktory ktory gracz aktualnie gra
+     * @return zwraca pozycje odczytana z stringa
+     */
 
     public double czytaj(String str,int ktory){
         int licz = 4;

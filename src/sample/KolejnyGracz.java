@@ -28,6 +28,10 @@ import static javafx.scene.paint.Color.*;
 import java.net.*;
 import java.io.*;
 
+
+/**
+ * Klasa potrzebna do odbioru streema
+ */
 public class KolejnyGracz extends Application {
     Stage window;
     Scene scena_menu, scena_plansza, scena_zasady,scena_jednoosobowa;
@@ -85,6 +89,7 @@ public class KolejnyGracz extends Application {
         przycisk_menu_plansza = new Button();
         przycisk_menu_plansza.setText("Menu");
         przycisk_menu_plansza.setOnAction(e -> window.setScene(scena_menu));
+        
 
 
         // menu

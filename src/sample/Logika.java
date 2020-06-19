@@ -11,6 +11,10 @@ import java.math.*;
 
 import static javafx.scene.paint.Color.*;
 
+/**
+ * Klasa obslugujaca logike gry
+ */
+
 public class Logika {
     LinkedList <Rectangle> kwadraty_lista;// = new LinkedList<Rectangle>();
     LinkedList <Circle> kola_red_lista;
@@ -46,6 +50,22 @@ public class Logika {
     public int poz_usun_y;
     Text historia_gry;
 
+    /**
+     *  Konstruktor klasy
+     * @param kwadraty_lista - plansza do gry
+     * @param kola_red_lista - pionki czerwone
+     * @param kola_white_lista pionki biale
+     * @param root layout
+     * @param zajete_red zajete pionki czerwone
+     * @param zajete_white zajete pionki biale
+     * @param roz_x rozmiar x planszy
+     * @param roz_y rozmiar y planszy
+     * @param wyslij_pionek wysyla pionek
+     * @param ostatni_wyslij wysyla poprzednia pozycje pionka
+     * @param nowy_wyslij  wysyla terazniejsza pozycje pionka
+     * @param historia_gry historia gry
+     */
+
 
     public Logika(LinkedList kwadraty_lista, LinkedList kola_red_lista, LinkedList kola_white_lista, Group root,LinkedList zajete_red, LinkedList zajete_white,
     int roz_x, int roz_y, boolean wyslij_pionek,Circle ostatni_wyslij,Circle nowy_wyslij,Text historia_gry ){
@@ -78,7 +98,10 @@ public class Logika {
 
     }
 
-
+    /**
+     * Jest wykonywany gdy nacisniesz kwadrat na planszy
+     * @param kwadrat nacisniety kwadrat na planszy
+     */
     public  void  nacisnietyKwadrat(Rectangle kwadrat){
       //  System.out.println("Kwadrat");
         if (ktory_gracz == 0){
@@ -90,6 +113,11 @@ public class Logika {
 
     }
 
+    /**
+     * Sprawdza czy na tym polu znajduje sie jakis pionek
+     * @param kwadrat nacisniete pole myszka
+     * @return zwraca prawda jesl sie znacjduje
+     */
     public boolean to_pole_zawiera(Rectangle kwadrat){
         for (Circle koloo : kola_red_lista){
             if (Math.abs(kwadrat.getY() - (koloo.getCenterY() - roz_y / 2)) < roz_y / 2 && Math.abs(kwadrat.getX() - (koloo.getCenterX() - roz_x /2)) < roz_x /2 ){
@@ -105,6 +133,14 @@ public class Logika {
         }
         return false;
     }
+
+    /**
+     * Sprawdza czy to pole zawiera jakis pionek
+     * @param poz_x pozycja x rozpatrywana
+     * @param poz_y pozycja y rozpatrywana
+     * @return zwraca prawda jesl sie zawiera
+     */
+
     public boolean to_pole_zawiera(double poz_x, double poz_y){
         poz_x = poz_x - roz_x /2;
         poz_y = poz_y - roz_y /2;
@@ -122,6 +158,13 @@ public class Logika {
         }
         return false;
     }
+
+    /**
+     * Sprawdza czy to pole zawiera biale pionki
+     * @param poz_x - pozycja x sprawdzana
+     * @param poz_y pozycja y sprawdzana
+     * @return zwraca prawda jesli zawiera
+     */
     public boolean to_pole_zawiera_biale(double poz_x, double poz_y){
         poz_x = poz_x - roz_x /2;
         poz_y = poz_y - roz_y /2 ;
@@ -133,6 +176,13 @@ public class Logika {
         }
         return false;
     }
+
+    /**
+     * Sprawdza czy to pole zawiera czerwone pionki
+     * @param poz_x rozpatrywana pozycja x
+     * @param poz_y rozpatrywana pozycja y
+     * @return zwraca prawda jesli zawiera
+     */
     public boolean to_pole_zawiera_czerwone(double poz_x, double poz_y){
         poz_x = poz_x - roz_x /2;
         poz_y = poz_y - roz_y /2 ;
@@ -145,6 +195,13 @@ public class Logika {
         return false;
     }
 
+    /**
+     * Sprawdza czy ruch na to pole jest dozwolone
+     * @param poz_x pozycja x pola
+     * @param poz_y pozycja y pola
+     * @param kwadrat nacisniety kwadrat
+     * @return zwraca prawda jesl dozwolone
+     */
 
     public boolean to_pole_dozwolone(double poz_x, double poz_y,Rectangle kwadrat){
         poz_x = poz_x - roz_x / 2;
@@ -155,6 +212,12 @@ public class Logika {
         return false;
     }
 
+    /**
+     * Sprawdza czy proba wykonania ruchu miesci sie w planszy
+     * @param poz_x rozpatrywana x pozycja
+     * @param poz_y rozpatywanan y pozycja
+     * @return zwraca prawda jesli sie miesci
+     */
     public boolean to_pole_miesci(double poz_x, double poz_y){
             if (poz_x > 0 && poz_y > 0 && poz_x < roz_x * 8 && poz_y < roz_y * 8 ){
                 return true;
@@ -162,6 +225,10 @@ public class Logika {
             return false;
     }
 
+    /**
+     * Metoda obslugujaca ruch Bialych Pionkow
+     * @param kwadrat - przyjmmuje pole na ktore chce sie poruszyc gracz
+     */
 
     public void  ruchBiale(Rectangle kwadrat){
         bylruch = false;
@@ -217,6 +284,13 @@ public class Logika {
 
 
     }
+
+    /**
+     * Wykonuje ruch Bialymi do Przodu w Prawo
+     * @param kwadrat pole na ktore gracz chce sie ruszyc
+     * @return zwraca prawda jesli ruch sie powiodl
+     */
+
     public boolean ruchBialePrawo(Rectangle kwadrat){
        // System.out.println("asdfasdf");
         if (to_pole_dozwolone(ostatni_bialy.getCenterX() + roz_x,ostatni_bialy.getCenterY() - roz_y,kwadrat)){
@@ -227,6 +301,11 @@ public class Logika {
         return false;
     }
 
+    /**
+     * Wykonuje ruch Bialymi do przdu w lewo
+     * @param kwadrat miejsce na ktore chce sie przemiescic
+     * @return zwraca prawda jesli ruch sie udal
+     */
     public boolean ruchBialeLewo(Rectangle kwadrat){
        // System.out.println("asdfasdf");
         if (to_pole_dozwolone(ostatni_bialy.getCenterX() - roz_x,ostatni_bialy.getCenterY() - roz_y,kwadrat)){
@@ -238,6 +317,12 @@ public class Logika {
     }
 
     // To dla krola
+
+    /**
+     * Metoda dostepna tylko dla krrola
+     * @param kwadrat miejsce na ktore ma sie ruszyc
+     * @return zwraca czy ruch sie udal
+     */
     public boolean ruchBialePrawoDol(Rectangle kwadrat){
         // System.out.println("asdfasdf");
         if (to_pole_dozwolone(ostatni_bialy.getCenterX() + roz_x,ostatni_bialy.getCenterY() + roz_y,kwadrat)){
@@ -248,6 +333,12 @@ public class Logika {
         return false;
     }
     // To dla krola
+
+    /**
+     * Metoda dostepna tylko dla krola
+     * @param kwadrat miejsce na ktore ma sie ruszyc
+     * @return zwraca true jesli ruch sie udal
+     */
     public boolean ruchBialeLewooDol(Rectangle kwadrat){
         // System.out.println("asdfasdf");
         if (to_pole_dozwolone(ostatni_bialy.getCenterX() - roz_x,ostatni_bialy.getCenterY() + roz_y,kwadrat)){
@@ -258,7 +349,11 @@ public class Logika {
         return false;
     }
 
-
+    /**
+     * Bicie bialych
+     * @param kwadrat miejsce na ktore ma sie udac pionek
+     * @return true jesli bicei sie udalo
+     */
     public boolean bijBialePrawoGora(Rectangle kwadrat){
         if (to_pole_dozwolone(ostatni_bialy.getCenterX() + roz_x * 2,ostatni_bialy.getCenterY() - roz_y * 2,kwadrat)) {
             if (to_pole_zawiera_czerwone(ostatni_bialy.getCenterX() + roz_x, ostatni_bialy.getCenterY() - roz_y)) {
@@ -271,6 +366,13 @@ public class Logika {
         }
         return false;
     }
+
+    /**
+     * funkcja sprawdza czy mozlie jest bicie
+     * @param xx  -1 lewo 1 prawo
+     * @param yy -1 gora 1 dol
+     * @return zwraca czy moze bic
+     */
     public boolean moze_bijBialePodstawa(int xx, int yy){
         if (!to_pole_zawiera(ostatni_bialy.getCenterX() + roz_x * 2 * xx,ostatni_bialy.getCenterY() + roz_y * 2 * yy)) {
             if (to_pole_miesci(ostatni_bialy.getCenterX() + roz_x * 2 * xx, ostatni_bialy.getCenterY() + roz_y * 2 * yy)) {
@@ -296,6 +398,11 @@ public class Logika {
         return moze_bijBialePodstawa(-1,1);
     }
 
+    /**
+     * Bicie bialych
+     * @param kwadrat miejsce na ktore ma sie udac pionek
+     * @return true jesli bicei sie udalo
+     */
     public boolean bijBialeLewoGora(Rectangle kwadrat){
         if (to_pole_dozwolone(ostatni_bialy.getCenterX() - roz_x * 2,ostatni_bialy.getCenterY() - roz_y * 2,kwadrat)) {
             if (to_pole_zawiera_czerwone(ostatni_bialy.getCenterX() - roz_x, ostatni_bialy.getCenterY() - roz_y)) {
@@ -308,6 +415,11 @@ public class Logika {
         }
         return false;
     }
+    /**
+     * Bicie bialych
+     * @param kwadrat miejsce na ktore ma sie udac pionek
+     * @return true jesli bicei sie udalo
+     */
     public boolean bijBialeLewoDol(Rectangle kwadrat){
         if (to_pole_dozwolone(ostatni_bialy.getCenterX() - roz_x * 2,ostatni_bialy.getCenterY() + roz_y * 2,kwadrat)) {
             if (to_pole_zawiera_czerwone(ostatni_bialy.getCenterX() - roz_x, ostatni_bialy.getCenterY() + roz_y)) {
@@ -320,6 +432,11 @@ public class Logika {
         }
         return false;
     }
+    /**
+     * Bicie bialych
+     * @param kwadrat miejsce na ktore ma sie udac pionek
+     * @return true jesli bicei sie udalo
+     */
     public boolean bijBialePrawoDol(Rectangle kwadrat){
         if (to_pole_dozwolone(ostatni_bialy.getCenterX() + roz_x * 2,ostatni_bialy.getCenterY() + roz_y * 2,kwadrat)) {
             if (to_pole_zawiera_czerwone(ostatni_bialy.getCenterX() + roz_x, ostatni_bialy.getCenterY() + roz_y)) {
@@ -334,8 +451,10 @@ public class Logika {
     }
 
 
-
-
+    /**
+     * Metoda obslugujaca ruch czerwonych
+     * @param kwadrat pole na ktore ma sie ruszyc czerwony
+     */
 
     public  void ruchCzerwone(Rectangle kwadrat){
         bylruch = false;
@@ -398,9 +517,12 @@ public class Logika {
     }
 
 
-
-
-
+    /**
+     * Sprawdza czy Czerwwone moga bic
+     * @param xx -1 lewo 1 prawo
+     * @param yy -1 dol  1 gora
+     * @return
+     */
 
     public boolean moze_bijCzerwonePodstawa(int xx, int yy){
         if (!to_pole_zawiera(ostatni_czerwony.getCenterX() + roz_x * 2 * xx,ostatni_czerwony.getCenterY() + roz_y * 2 * yy)) {
@@ -428,8 +550,11 @@ public class Logika {
     }
 
 
-
-
+    /**
+     * Wykonuje ruch w Prawo
+     * @param kwadrat pole ktore nacisnal gracz
+     * @return true - jesli ruch sie udal
+     */
 
 
     public  boolean ruchCzerwonePrawo(Rectangle kwadrat){
@@ -442,6 +567,11 @@ public class Logika {
         return false;
 
     }
+    /**
+     * Wykonuje ruch w Lewo
+     * @param kwadrat pole ktore nacisnal gracz
+     * @return true - jesli ruch sie udal
+     */
     public boolean  ruchCzerwoneLewo(Rectangle kwadrat){
       //  System.out.println("asdfasdf");
         if (to_pole_dozwolone(ostatni_czerwony.getCenterX() - roz_x,ostatni_czerwony.getCenterY() + roz_y,kwadrat)){
@@ -454,6 +584,12 @@ public class Logika {
     }
 
     //to jest dla krola
+    /**
+     * Wykonuje ruch w Prawo Dol (tylko dla krola)
+     * @param kwadrat pole ktore nacisnal gracz
+     * @return true - jesli ruch sie udal
+     */
+
     public  boolean ruchCzerwonePrawoDol(Rectangle kwadrat){
         //  System.out.println("asdfasdf");
         if (to_pole_dozwolone(ostatni_czerwony.getCenterX() + roz_x,ostatni_czerwony.getCenterY() - roz_y,kwadrat)){
@@ -465,6 +601,12 @@ public class Logika {
 
     }
     //to dla krola
+
+    /**
+     * Wykonuje ruch w Lewo Dol (tylko dla krola)
+     * @param kwadrat pole ktore nacisnal gracz
+     * @return true - jesli ruch sie udal
+     */
     public  boolean ruchCzerwoneLewoDol(Rectangle kwadrat){
         //  System.out.println("asdfasdf");
         if (to_pole_dozwolone(ostatni_czerwony.getCenterX() - roz_x,ostatni_czerwony.getCenterY() - roz_y,kwadrat)){
@@ -477,7 +619,11 @@ public class Logika {
     }
 
 
-
+    /**
+     * Wykonuje bicie
+     * @param kwadrat -pole na ktore ma wykonac bicie
+     * @return zwraca tru jesli bicie sie udalo
+     */
 
     public boolean bijCzerwoneLewoDol(Rectangle kwadrat){
         if (to_pole_dozwolone(ostatni_czerwony.getCenterX() - roz_x * 2,ostatni_czerwony.getCenterY() + roz_y * 2,kwadrat)) {
@@ -492,6 +638,11 @@ public class Logika {
         return false;
     }
 
+    /**
+     * Wykonuje bicie
+     * @param kwadrat -pole na ktore ma wykonac bicie
+     * @return zwraca tru jesli bicie sie udalo
+     */
 
     public boolean bijCzerwoneLewoGora(Rectangle kwadrat){
         if (to_pole_dozwolone(ostatni_czerwony.getCenterX() - roz_x * 2,ostatni_czerwony.getCenterY() - roz_y * 2,kwadrat)) {
@@ -506,7 +657,11 @@ public class Logika {
         return false;
     }
 
-
+    /**
+     * Wykonuje bicie
+     * @param kwadrat -pole na ktore ma wykonac bicie
+     * @return zwraca tru jesli bicie sie udalo
+     */
 
     public  boolean bijCzerwonePrawoDol(Rectangle kwadrat){
         if (to_pole_dozwolone(ostatni_czerwony.getCenterX() + roz_x * 2,ostatni_czerwony.getCenterY() + roz_y * 2,kwadrat)) {
@@ -520,6 +675,12 @@ public class Logika {
         }
         return false;
     }
+
+    /**
+     * Wykonuje bicie
+     * @param kwadrat -pole na ktore ma wykonac bicie
+     * @return zwraca tru jesli bicie sie udalo
+     */
 
     public  boolean bijCzerwonePrawoGora(Rectangle kwadrat){
         if (to_pole_dozwolone(ostatni_czerwony.getCenterX() + roz_x * 2,ostatni_czerwony.getCenterY() - roz_y * 2,kwadrat)) {
@@ -535,7 +696,12 @@ public class Logika {
     }
 
 
-
+    /**
+     * Funkcja ktora usuwa pionek Bialy
+     * @param poz_x pozycja x pionka bialego
+     * @param poz_y pozycja y pionka bailego
+     * @return zwraca prawda jesli bicie sie udalo
+     */
     public boolean  usunBiale(double poz_x,double poz_y){
         poz_x = poz_x - roz_x /2;
         poz_y = poz_y - roz_y /2 ;
@@ -559,6 +725,13 @@ public class Logika {
         }
         return  false;
     }
+
+    /**
+     * Metoda usuwa czerwony pionek
+     * @param poz_x pozycja x usuwanego pionka
+     * @param poz_y pozycja y usuwanego pionka
+     * @return zwraca tru jesli usuniecie sie udalo
+     */
 
     public boolean  usunCzerwone(double poz_x,double poz_y){
 
@@ -585,6 +758,13 @@ public class Logika {
         return  false;
     }
 
+    /**
+     * Znajduje pionek
+     * @param poz_x pozycja x pionka
+     * @param poz_y pozycja y pionka
+     * @return zwraca pionek
+     */
+
     Circle  znajdz_Pionek(double poz_x, double poz_y){
         poz_x = poz_x - roz_x /2;
         poz_y = poz_y - roz_y /2;
@@ -603,6 +783,15 @@ public class Logika {
         return  null;
 
     }
+
+    /**
+     * Funkcja potrzebna do obslugi komunikacji Serwe Klient
+     * ustawia na wyznaczone pole pionek
+     * @param wczesniej_poz_x wczesniejsza pozycja  x pionka
+     * @param wczesniej_poz_y wczesniejsz pozycja y pionka
+     * @param teraz_poz_x terazniejsza pozycja x pionka
+     * @param teraz_poz_y terazniejsz apozycja y pionka
+     */
     public void ustaw_Na_Pole(double wczesniej_poz_x,double wczesniej_poz_y, double teraz_poz_x, double teraz_poz_y){
         Circle koloo = znajdz_Pionek(wczesniej_poz_x,wczesniej_poz_y);
       //  System.out.println("Ustaw na pole");
@@ -614,6 +803,9 @@ public class Logika {
 
     }
 
+    /**
+     * Wysyla do watku inforamcje o wykonanym ruchu
+     */
     public  void wyslij_do_watku(){
      //   System.out.println("Wysylanie do watku");
         wyslij_pionek = true;
@@ -621,10 +813,18 @@ public class Logika {
 
     }
 
+    /**
+     * Wysyla pionek
+     * @return zwraca pionek
+     */
     public  boolean stan_wyslij_pionek(){
         return wyslij_pionek;
     }
 
+    /**
+     * Metoda sprawdza czy pojawil sie nowy bialy krol
+     * @return zwraca prawda jesli sie pojawil
+     */
     public boolean uaktualnij_krole_biale(){
         for(Circle koloo: kola_white_lista){
             if (koloo.getCenterY() < roz_y && !krole_biale.contains(koloo)){
@@ -637,6 +837,11 @@ public class Logika {
     }
 
 
+    /**
+     * Metoda sprawdza czy pojawil sie nowy czerwony krol
+     * @return zwraca prawda jesli sie pojawil
+     */
+
     public boolean uaktualnij_krole_czerwone(){
         for(Circle koloo: kola_red_lista){
             if (koloo.getCenterY() > 7* roz_y && !krole_czerowne.contains(koloo)){
@@ -647,6 +852,12 @@ public class Logika {
         }
         return false;
     }
+
+    /**
+     * Sprawdza czy rozpatrywany pioenek bialy jest krolem
+     * @param koloo rozpatrywany pionek
+     * @return zwraca prawda jesli jest krolem
+     */
     public boolean czyJestKrolem_biale(Circle koloo){
 
             if (krole_biale.contains(koloo)){
@@ -656,6 +867,11 @@ public class Logika {
         return false;
     }
 
+    /**
+     * Sprawdza czy rozpatrywany pioenek czerwony jest krolem
+     * @param koloo rozpatrywany pionek
+     * @return zwraca prawda jesli jest krolem
+     */
     public boolean czyJestKrolem_czerwone(Circle koloo){
 
             if (krole_czerowne.contains(koloo)){
@@ -664,6 +880,10 @@ public class Logika {
 
         return false;
     }
+
+    /**
+     * Metoda uaktualniajaca historie
+     */
 
     public void uaktualnij_historie(){
         String pomw = new String();
@@ -701,6 +921,11 @@ public class Logika {
 
     }
 
+    /**
+     * Zwraca listere szachownicy
+     * @param liczba pozycja pionka x
+     * @return zwraca litere
+     */
     public String zworc_litere_szachwonicy(int liczba){
         String wyn = new String();
         wyn = "";

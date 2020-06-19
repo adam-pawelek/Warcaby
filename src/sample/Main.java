@@ -33,7 +33,14 @@ import java.io.*;
 
 
 import javafx.scene.text.Font.*;
+
+/***
+ * Glowna klasa odpowiedzialana za uruchomienie funkcji
+ */
+
 public class Main extends Application {
+    Thread t1;
+
     Stage window;
     Scene scena_menu, scena_plansza, scena_zasady,scena_jednoosobowa;
 
@@ -331,7 +338,7 @@ public class Main extends Application {
         //t1.start();
 
 
-        Thread t1 = new Thread(new Serwer(plansza));
+        t1 = new Thread(new Serwer(plansza));
         t1.start();
 
 

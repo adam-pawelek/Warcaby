@@ -40,6 +40,21 @@ public class Serwer extends Thread{
    // Circle nowy_wyslij;
     sample.Plansza plansza;
 
+    /**
+     *
+     * @param kwadraty_lista  -lista kwadratow planszy
+     * @param kola_red_lista - pionki czerwone
+     * @param kola_white_lista - pionki biale
+     * @param root  - layout
+     * @param zajete_red - zajete czerwone
+     * @param zajete_white - zajete biale
+     * @param roz_x - rozmiar x  kwadratu
+     * @param roz_y  rozmiar y kwadratu
+     * @param wyslij_pionek - wyslij pionek
+     * @param ostatni_wyslij - do wyslania pionek przed ruchem
+     * @param nowy_wyslij  do wyslania pionek po ruchu
+     */
+
 
 
     public Serwer(LinkedList kwadraty_lista, LinkedList kola_red_lista, LinkedList kola_white_lista, Group root,LinkedList zajete_red, LinkedList zajete_white,
@@ -130,6 +145,12 @@ public class Serwer extends Thread{
         }
     }
 
+    /**
+     * Funkcja potrzebana do odczytania wyslanego stringa
+     * @param str string otrzymywana od klienta
+     * @param ktory ktory gracz aktualnie gra
+     * @return zwraca liczbe na ktore miejsce trzeba sie przesunac
+     */
     public double czytaj(String str,int ktory){
         int licz = 0;
         String pom = new String(" ");
@@ -151,6 +172,10 @@ public class Serwer extends Thread{
         System.out.println(zamiana);
         return (double) zamiana;
     }
+
+    /**
+     * Wysyla do drugirgo gracza poruszenie sie
+     */
     public void wyslij_drugi_gracz(){
 
      ///  System.out.println(plansza.logika.wyslij_pionek);
@@ -178,6 +203,10 @@ public class Serwer extends Thread{
         }
     }
 
+    /**
+     * tworzy string ktory wysyla do streamu gracza
+     * @return - zwraca rozkaz ruchu
+     */
     public  String stworzString() {
         String wynik = "Ruch";
 
@@ -197,6 +226,11 @@ public class Serwer extends Thread{
         wynik += " ";
         return wynik;
     }
+
+    /**
+     * Gerneruje rozkaz bicia
+     * @return - zwraca rozkaz bicia do klienta
+     */
     public String bijString(){
         String wynik = "Bijj";
         int zamint;
